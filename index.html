@@ -2374,15 +2374,7 @@
     }
 
     #classroom::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 68% 28%, rgba(47,141,122,.14), transparent 24%),
-        radial-gradient(circle at 24% 72%, rgba(212,161,70,.13), transparent 28%),
-        linear-gradient(120deg, transparent 0 21%, rgba(36,49,42,.035) 21.1% 21.2%, transparent 21.3% 100%),
-        linear-gradient(36deg, transparent 0 58%, rgba(36,49,42,.035) 58.1% 58.2%, transparent 58.3% 100%);
-      pointer-events: none;
+      display: none;
     }
 
     #classroom .inner {
@@ -2407,6 +2399,7 @@
 
     #classroom .section-head h2 .title-line {
       display: block;
+      white-space: nowrap;
     }
 
     #classroom .section-head p {
@@ -2426,19 +2419,7 @@
     }
 
     #classroom .classroom-grid::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: min(760px, 70vw);
-      aspect-ratio: 1.7;
-      transform: translate(-50%, -50%) rotate(-7deg);
-      border: 1px solid rgba(36,49,42,.07);
-      border-radius: 50%;
-      background:
-        linear-gradient(90deg, transparent calc(50% - 1px), rgba(36,49,42,.045) 50%, transparent calc(50% + 1px)),
-        linear-gradient(0deg, transparent calc(50% - 1px), rgba(36,49,42,.035) 50%, transparent calc(50% + 1px));
-      pointer-events: none;
+      display: none;
     }
 
     #classroom .class-card {
@@ -2458,12 +2439,14 @@
       animation-delay: var(--float-delay, 0s);
       transition: opacity .45s ease, filter .45s ease, border-color .28s ease, box-shadow .28s ease, background .28s ease, transform .45s ease;
       outline: none;
+      pointer-events: none;
     }
 
     #classroom .class-card.is-visible {
       opacity: .56;
       filter: blur(1.4px);
       transform: translate3d(var(--float-x, 0), var(--float-y, 0), 0) scale(.985);
+      pointer-events: auto;
     }
 
     #classroom .class-card.active {
@@ -2471,10 +2454,27 @@
       opacity: 1;
       filter: none;
       animation-play-state: paused;
-      border-color: rgba(47,141,122,.3);
-      background: rgba(255,248,235,.96);
-      box-shadow: 0 32px 90px rgba(36,49,42,.16);
+      border-color: rgba(47,141,122,.6);
+      background: linear-gradient(135deg, rgba(47,141,122,.96), rgba(36,95,83,.96));
+      box-shadow: 0 32px 90px rgba(36,49,42,.18);
       transform: translate3d(var(--float-x, 0), calc(var(--float-y, 0) - 8px), 0) scale(1.02);
+    }
+
+    #classroom .class-card.active::before {
+      background: var(--gold-2);
+      box-shadow: 0 0 0 7px rgba(240,198,109,.2);
+    }
+
+    #classroom .class-card.active small,
+    #classroom .class-card.active h3,
+    #classroom .class-card.active p {
+      color: var(--ivory);
+    }
+
+    #classroom .class-card.active .class-card-tags span {
+      color: rgba(255,248,235,.88);
+      border-color: rgba(255,248,235,.22);
+      background: rgba(255,248,235,.08);
     }
 
     #classroom .class-card:nth-child(1) {
@@ -2620,8 +2620,16 @@
       background: rgba(10,8,5,.88);
       box-shadow: 0 28px 90px rgba(5,4,3,.24);
       backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
       transform: translate3d(calc(var(--classroom-move-x, 0px) * .18), calc(var(--classroom-move-y, 0px) * .18), 0);
+      transition: opacity .24s ease, visibility .24s ease, transform .24s ease;
       pointer-events: none;
+    }
+
+    #classroom .classroom-grid.has-active .classroom-detail {
+      opacity: 1;
+      visibility: visible;
     }
 
     #classroom .classroom-detail small {
@@ -2691,10 +2699,14 @@
     }
 
     .final p {
-      max-width: 680px;
+      max-width: 1080px;
       margin-top: 24px;
       color: rgba(255,248,235,.72);
       font-size: 20px;
+    }
+
+    .final p .single-line {
+      white-space: nowrap;
     }
 
     .cta-row {
@@ -2970,6 +2982,9 @@
         font-size: clamp(42px, 13vw, 64px);
         line-height: .92;
       }
+      #classroom .section-head h2 .title-line {
+        white-space: normal;
+      }
       #problem .section-head p,
       #bridge .section-head p,
       #classroom .section-head p {
@@ -3045,6 +3060,7 @@
         transform: none;
         opacity: 1;
         filter: none;
+        pointer-events: auto;
       }
       #classroom .class-card:is(:hover, :focus) {
         transform: translateY(-4px);
@@ -3243,6 +3259,9 @@
       }
       .gallery-main, .gallery-stack figure { min-height: 360px; }
       .final { padding: 78px 14px; }
+      .final p .single-line {
+        white-space: normal;
+      }
       .cta-row { display: grid; }
       .trial-form {
         display: grid;
@@ -3278,7 +3297,7 @@
     </div>
     <div class="nav-right">
       <div class="lang-toggle" aria-label="Language">
-        <button type="button" data-set-lang="zh">中</button>
+        <button type="button" data-set-lang="zh"><span data-zh>中</span><span data-en>ZH</span></button>
         <button type="button" data-set-lang="en">EN</button>
       </div>
     </div>
@@ -3635,7 +3654,7 @@
       <div class="inner">
         <div class="label"><span data-zh>進入模擬</span><span data-en>enter the simulation</span></div>
         <h2><span data-zh>親自走進改革現場，判斷失敗如何形成。</span><span data-en>Enter the reform sites and judge how failure was formed.</span></h2>
-        <p><span data-zh>留下電郵，申請試玩《自強三十年》，讓城市、史料、人物抉擇與後果成為可討論的歷史經驗。</span><span data-en>Leave your email to request a trial of the simulation.</span></p>
+        <p><span class="single-line" data-zh>留下電郵，申請試玩《自強三十年》，讓城市、史料、人物抉擇與後果成為可討論的歷史經驗。</span><span data-en>Leave your email to request a trial of The Self-Strengthening Edition and turn cities, sources, actor choices, and consequences into discussable historical experience.</span></p>
         <form class="trial-form" id="trial-form">
           <input id="trial-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="輸入電郵地址" aria-label="電郵地址" required>
           <button class="btn gold" type="submit"><span data-zh>申請試玩</span><span data-en>Request trial</span></button>
@@ -3953,6 +3972,133 @@
       }
     ];
 
+    const translatedData = {
+      static: {
+        zh: {
+          modulesLabel: '模擬系統',
+          modulesTitle: '逐層展開改革世界',
+          modulesCopy: '進入大清地圖，城市、史料、人物抉擇與後果逐一浮現。',
+          bridgeLabel: '由經歷走向論證',
+          bridgeTitle: '從歷史場景中的紅點走一段歷史論證',
+          bridgeCopy: '建構論點、論據與論證貫穿六步：從地圖紅點進入威海衛，觀察海防現場、讀取史料、辨認限制、連接後果，最後回到洋務運動成敗的論證。',
+          visualLabel: '視覺世界',
+          visualTitle: '城市、史料與結局構成一條歷史路線',
+          visualCopy: '沉浸感不是裝飾。視覺世界讓學生把技術、制度、人物與戰爭後果放在同一個歷史空間中理解。',
+          classroomLabel: '課堂與研究層',
+          classroomTitleLines: ['把遊戲變成可教、可觀察、', '可改進的學習設計'],
+          classroomCopy: '這一層不是再展示遊戲畫面，而是展示教師、AI、研究證據與學習數據如何支撐課堂。每張卡都是一個可被使用、觀察或改進的入口。',
+          cloudPanelLabel: '研究工具聚焦',
+          cloudPanelTitle: '從困難詞語進入設計需要',
+          cloudPanelCopy: '點擊詞語，查看遊戲要回應的學習困難與歷史因素。',
+          trialInput: '輸入電郵地址',
+          trialInvalid: '請輸入有效電郵地址。',
+          trialSuccess: '已記下電郵，稍後可接駁試玩申請系統。'
+        },
+        en: {
+          modulesLabel: 'Simulation System',
+          modulesTitle: 'Unfold the Reform World Layer by Layer',
+          modulesCopy: 'Enter the Qing map and watch cities, sources, actor choices, and consequences appear one by one.',
+          bridgeLabel: 'From Experience to Argument',
+          bridgeTitle: 'From a scene marker to a historical argument',
+          bridgeCopy: 'Claim, evidence, and reasoning are built across six steps: enter Weihaiwei, observe the coastal defence scene, read sources, identify limits, connect consequences, and return to judging the Self-Strengthening Movement.',
+          visualLabel: 'Visual World',
+          visualTitle: 'Cities, sources, and endings form one historical route',
+          visualCopy: 'Immersion is not decoration. The visual world helps students place technology, institutions, actors, and wartime consequences in the same historical space.',
+          classroomLabel: 'Classroom and Research Layer',
+          classroomTitleLines: ['Turn the simulation into a teachable, observable', 'and improvable learning design'],
+          classroomCopy: 'This layer shows how teachers, AI support, research evidence, and learning data can support classroom use. Each card is an entry point for use, observation, or revision.',
+          cloudPanelLabel: 'Research Focus',
+          cloudPanelTitle: 'Move from learning difficulties to design needs',
+          cloudPanelCopy: 'Select a term to see the learning difficulty or historical factor the simulation responds to.',
+          trialInput: 'Enter your email address',
+          trialInvalid: 'Please enter a valid email address.',
+          trialSuccess: 'Email noted. A trial request flow can be connected next.'
+        }
+      },
+      simulationLayers: {
+        zh: [
+          ['地圖', '地圖與路線', '改革先被放回多城市、多壓力的歷史網絡。'],
+          ['城市', '城市現場', '城市不是背景，而是人物、制度與壓力交會的場域。'],
+          ['史料', '史料先行', '學生先接觸圖像與文字線索，再作判斷。'],
+          ['人物決策', '人物與抉擇', '人物立場、時代限制與可行選項共同塑造行動。'],
+          ['後果', '後果與評價', '結局把遊戲經歷帶回「為何失敗」的歷史論證。']
+        ],
+        en: [
+          ['Map', 'Map and Routes', 'Reform is placed back into a network of cities and pressures.'],
+          ['City', 'Urban Scene', 'The city is not a backdrop; it is where actors, institutions, and pressures meet.'],
+          ['Sources', 'Sources First', 'Students encounter visual and written clues before making a judgement.'],
+          ['Actors', 'Actors and Choices', 'Positions, constraints, and available options shape historical action.'],
+          ['Consequences', 'Consequences and Evaluation', 'The ending brings the experience back to the argument about failure.']
+        ]
+      },
+      flow: {
+        en: [
+          { label: '01 / Accept the historical question', title: 'Accept the historical question', copy: 'You begin with a question that has to be investigated: why did the Self-Strengthening Movement fail?', tags: ['Historical question', 'Inquiry starting point'] },
+          { label: '02 / Explore city clues', title: 'Explore city clues', copy: 'You search the city for traces of institutions, commerce, actors, and social pressure.', tags: ['Scene observation', 'Clue search'] },
+          { label: '03 / Mark usable evidence', title: 'Mark usable evidence', copy: 'You decide which visual or textual clues can support a historical explanation.', tags: ['Evidence selection', 'Usefulness judgement'] },
+          { label: '04 / Understand actor positions', title: 'Understand actor positions', copy: 'You do not simply choose right or wrong; you read decisions within historical constraints.', tags: ['Actor context', 'Constrained choice'] },
+          { label: '05 / Organise causal links', title: 'Organise causal links', copy: 'You connect technology, finance, institutions, social resistance, and wartime testing into an explanation.', tags: ['Causal links', 'Relative importance'] },
+          { label: '06 / Form an evaluative answer', title: 'Form an evaluative answer', copy: 'You turn the game experience into an answer with evidence, causation, and judgement.', tags: ['Argument formed', 'Evaluative answer'] }
+        ]
+      },
+      cloud: {
+        en: [
+          { label: 'Student Layer', title: 'Memorised answers', copy: 'Students may remember conclusions without understanding how causes interact in a concrete historical situation.' },
+          { label: 'Student Layer', title: 'Copying sources', copy: 'Students may find information but stop at copying, without explaining how evidence supports judgement.' },
+          { label: 'Student Layer', title: 'Weak evidence', copy: 'Without concrete evidence, historical judgement easily becomes general impression or vague comment.' },
+          { label: 'Student Layer', title: 'Weak question focus', copy: 'Students may describe background but fail to return to the comparison, explanation, or evaluation required by the question.' },
+          { label: 'Student Layer', title: 'Weak argumentation', copy: 'Students need to organise observations, sources, and causal relations, not merely list reasons.' },
+          { label: 'Student Layer', title: 'Limited perspective taking', copy: 'Without entering actors and constraints, students may simplify historical choices through present-day assumptions.' },
+          { label: 'Student Layer', title: 'Fragile recall', copy: 'Memory is not rote recall; it needs scenes, actors, and event relations that can be retrieved and used.' },
+          { label: 'Teacher Layer', title: 'Curriculum connection', copy: 'Game tasks need to return to curriculum questions, source use, and assessment requirements.' },
+          { label: 'Teacher Layer', title: 'Using AI well', copy: 'AI can support scenarios, prompts, and feedback, while teachers still design questions and criteria.' },
+          { label: 'Teacher Layer', title: 'Scaffolding', copy: 'The game needs prompts, worksheets, and discussion questions to move students from experience to argument.' },
+          { label: 'Teacher Layer', title: 'Inquiry learning', copy: 'Students do not receive answers; they investigate historical problems through cities, sources, actor choices, and consequences.' },
+          { label: 'Teacher Layer', title: 'Game-based learning', copy: 'The game is not reward packaging; it uses interaction to show how historical conditions constrain choices.' },
+          { label: 'Teacher Layer', title: 'Historical empathy', copy: 'Actor situations and period constraints help students understand that choices are not simply right or wrong.' },
+          { label: 'Teacher Layer', title: 'Values education', copy: 'Reform failure opens discussion about responsibility, choice, and social change.' }
+        ]
+      },
+      bridge: {
+        en: [
+          { label: '01 / Enter Weihaiwei', title: 'Enter through the marker', copy: 'The Weihaiwei marker turns the historical problem from an abstract conclusion into a place-based event.' },
+          { label: '02 / Observe coastal defence', title: 'Read the harbour, forts, and fleet', copy: 'Students first observe the harbour, defences, batteries, and Beiyang Fleet as historical clues.' },
+          { label: '03 / Read related sources', title: 'Turn Weihaiwei material into evidence', copy: 'Sources are not answers to copy; they are used to question defence, fleet conditions, and wartime outcomes.' },
+          { label: '04 / Identify reform limits', title: 'Find limits through clues', copy: 'Observation and sources are connected to supply, training, command, finance, and institutional limits.' },
+          { label: '05 / Connect defeat consequences', title: 'Weihaiwei was not an isolated result', copy: 'The fall of Weihaiwei and the loss of the Beiyang Fleet tested whether reform had become military capacity.' },
+          { label: '06 / Build a historical argument', title: 'Return to judging reform failure', copy: 'The argument is not simply about weak technology; it explains how technology, institutions, resources, and mobilisation failed to support one another.' }
+        ]
+      },
+      visual: {
+        en: [
+          { alt: 'Shanghai commercial network', scene: 'Shanghai', theme: 'Commercial Network', function: 'See how treaty ports, merchant initiatives, and institutions intersected in the city.' },
+          { alt: 'Fuzhou naval shipyard space', scene: 'Fuzhou', theme: 'Naval Shipyard', function: 'See how shipbuilding, schools, and translation were organised in pursuit of military strength.' },
+          { alt: 'Weihaiwei Beiyang Fleet', scene: 'Weihaiwei', theme: 'Beiyang Fleet', function: 'Read coastal defence facilities and the limits of reform through Weihaiwei.' },
+          { alt: 'Tokyo and the Sino-Japanese comparison', scene: 'Tokyo, Japan', theme: 'Sino-Japanese Comparison', function: 'Use Meiji Japan as a comparison point for the partial nature of Self-Strengthening reform.' },
+          { alt: 'Battle of the Yellow Sea', scene: 'Yellow Sea', theme: 'Battle of the Yellow Sea', function: 'The naval battle exposed accumulated problems in institutions, finance, and training.' },
+          { alt: 'Defeat in the Sino-Japanese War', scene: 'Ending', theme: 'Defeat in 1895', function: 'Return to the central question: why did defeat in 1895 symbolise the movement ending in failure?' }
+        ]
+      },
+      classroom: {
+        en: [
+          { label: 'Classroom Flow', title: 'From question to writing', copy: 'The lesson route connects question setting, game exploration, group discussion, and historical writing.', tags: ['Question entry', 'Discussion', 'Writing'] },
+          { label: 'Teacher Scaffolding', title: 'Turn difficulty into prompts', copy: 'Prompts, follow-up questions, worksheets, and tiered tasks help students organise judgement from experience.', tags: ['Prompts', 'Follow-up', 'Tiered tasks'] },
+          { label: 'AI Support', title: 'See argument gaps faster', copy: 'AI can summarise student responses, generate follow-up questions, and mark gaps between claims, evidence, and explanation.', tags: ['Summarise', 'Question', 'Mark gaps'] },
+          { label: 'Research Evidence', title: 'Track how understanding changes', copy: 'Pre/post tasks, interviews, work analysis, and classroom observation make learning effects traceable.', tags: ['Pre/post', 'Interview', 'Work analysis'] },
+          { label: 'Learning Data', title: 'Turn pathways into feedback', copy: 'Choice paths, source use, and argument changes help teachers see where support breaks down.', tags: ['Pathways', 'Source use', 'Argument change'] },
+          { label: 'Design Iteration', title: 'Revise tasks from student difficulty', copy: 'When weak evidence, weak question focus, or limited perspective-taking recur, tasks and prompts can be redesigned.', tags: ['Revise tasks', 'Adjust prompts', 'Feed back'] }
+        ],
+        zh: [
+          { label: '課堂流程', title: '從問題進入，再回到書寫', copy: '導入問題、遊戲探索、小組討論與歷史書寫被放在同一條課堂路線中。', tags: ['導入問題', '小組討論', '歷史書寫'] },
+          { label: '教師鷹架', title: '把困難變成可追問的任務', copy: '提示語、追問句、工作紙與分層任務，協助學生由經歷整理出判斷。', tags: ['提示語', '追問句', '分層任務'] },
+          { label: 'AI 支援', title: '讓教師更快看見論證缺口', copy: 'AI 可整理學生回應、生成追問，並標示論點、證據與解釋之間的斷裂。', tags: ['整理回應', '生成追問', '標示缺口'] },
+          { label: '研究證據', title: '不只看完成度，也看理解如何變化', copy: '前後測、訪談、作品分析與課堂觀察，讓學習成效有可追蹤的證據。', tags: ['前後測', '訪談', '作品分析'] },
+          { label: '學習數據', title: '把遊戲路徑轉成教學回饋', copy: '選擇路徑、史料使用與論證變化，幫助教師辨認學生在哪一步失去支撐。', tags: ['選擇路徑', '史料使用', '論證變化'] },
+          { label: '設計迭代', title: '用學生困難反過來修改任務', copy: '當證據薄弱、扣題不足或未能代入反覆出現，任務與提示就能被重新設計。', tags: ['修改任務', '調整提示', '回饋設計'] }
+        ]
+      }
+    };
+
     const stepButtons = Array.from(document.querySelectorAll('.flow-tab'));
     const slides = Array.from(document.querySelectorAll('.flow-slide'));
     const stepLabel = document.querySelector('#step-label');
@@ -4005,6 +4151,21 @@
       return value[currentLang] || value.zh || value.en || '';
     }
 
+    function translated(listName, index, fallbackList) {
+      const translatedList = translatedData[listName]?.[currentLang];
+      return translatedList?.[index] || fallbackList?.[index] || {};
+    }
+
+    function setText(selector, value) {
+      const element = document.querySelector(selector);
+      if (element) element.textContent = value;
+    }
+
+    function setHTML(selector, value) {
+      const element = document.querySelector(selector);
+      if (element) element.innerHTML = value;
+    }
+
     let currentStepIndex = -1;
     let currentVisualIndex = -1;
     let currentBridgeIndex = -1;
@@ -4037,15 +4198,92 @@
           video.preload = 'none';
         }
       });
-      const data = stepData[safeIndex];
+      const data = translated('flow', safeIndex, stepData);
       stepLabel.textContent = localize(data.label);
       stepTitle.textContent = localize(data.title);
       stepCopy.textContent = localize(data.copy);
-      stepTags.innerHTML = data.tags.map((tag) => `<span>${tag}</span>`).join('');
+      stepTags.innerHTML = data.tags.map((tag) => `<span>${localize(tag)}</span>`).join('');
     }
 
     function setSimulationStep(index) {
       setStep(index);
+    }
+
+    function applyStaticTranslations() {
+      const staticText = translatedData.static[currentLang] || translatedData.static.zh;
+      setText('#modules .section-head .label', staticText.modulesLabel);
+      setText('#modules .section-head h2', staticText.modulesTitle);
+      setText('#modules .section-head p', staticText.modulesCopy);
+      setText('#bridge .section-head .label', staticText.bridgeLabel);
+      setText('#bridge .section-head h2', staticText.bridgeTitle);
+      setText('#bridge .section-head p', staticText.bridgeCopy);
+      setText('#visual-world .section-head .label', staticText.visualLabel);
+      setText('#visual-world .section-head h2', staticText.visualTitle);
+      setText('#visual-world .section-head p', staticText.visualCopy);
+      setText('#classroom .section-head .label', staticText.classroomLabel);
+      setHTML('#classroom .section-head h2', staticText.classroomTitleLines.map((line) => `<span class="title-line">${line}</span>`).join(''));
+      setText('#classroom .section-head p', staticText.classroomCopy);
+      setText('.cloud-panel small', staticText.cloudPanelLabel);
+      setText('.cloud-panel h3', staticText.cloudPanelTitle);
+      setText('.cloud-panel p', staticText.cloudPanelCopy);
+      if (trialEmail) {
+        trialEmail.placeholder = staticText.trialInput;
+        trialEmail.setAttribute('aria-label', staticText.trialInput);
+      }
+
+      const layerCaptions = Array.from(document.querySelectorAll('.simulation-layer-phase .simulation-caption'));
+      const layerText = translatedData.simulationLayers[currentLang] || translatedData.simulationLayers.zh;
+      layerCaptions.forEach((caption, index) => {
+        const item = layerText[index];
+        if (!item) return;
+        caption.querySelector('small').textContent = item[0];
+        caption.querySelector('h3').textContent = item[1];
+        caption.querySelector('p').textContent = item[2];
+      });
+
+      stepButtons.forEach((button, index) => {
+        const data = translated('flow', index, stepData);
+        const title = button.querySelector('b');
+        if (title) title.textContent = localize(data.title);
+      });
+
+      visualThumbs.forEach((thumb, index) => {
+        const data = translated('visual', index, visualWorldItems);
+        if (data.alt) thumb.setAttribute('aria-label', data.alt);
+      });
+    }
+
+    function updateCloudTermsLanguage() {
+      const dataList = currentLang === 'en' ? translatedData.cloud.en : cloudData;
+      cloudTerms.forEach((term) => {
+        const index = Number(term.dataset.cloudIndex);
+        const data = dataList[index];
+        if (data) term.textContent = data.title;
+      });
+      cloudLayerButtons.forEach((button) => {
+        const layer = button.dataset.cloudLayerToggle;
+        button.textContent = currentLang === 'en'
+          ? (layer === 'teacher' ? 'Teacher Layer' : 'Student Layer')
+          : (layer === 'teacher' ? '老師層面' : '學生層面');
+      });
+    }
+
+    function updateClassroomCardsLanguage() {
+      const dataList = translatedData.classroom[currentLang] || translatedData.classroom.zh;
+      classroomCards.forEach((card, index) => {
+        const data = dataList[index];
+        if (!data) return;
+        card.querySelector('small').textContent = data.label;
+        card.querySelector('h3').textContent = data.title;
+        card.querySelector('p').textContent = data.copy;
+        const tags = card.querySelector('.class-card-tags');
+        if (tags) {
+          tags.innerHTML = data.tags.map((tag) => `<span>${tag}</span>`).join('');
+          tags.setAttribute('aria-label', `${data.label} key points`);
+        }
+      });
+      const activeIndex = Number(classroomGrid?.dataset.activeClassroom) || 0;
+      if (classroomGrid?.classList.contains('has-active')) setClassroomActive(activeIndex);
     }
 
     function applyLanguage(lang) {
@@ -4055,8 +4293,16 @@
       langButtons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.setLang === currentLang));
       });
+      applyStaticTranslations();
+      updateCloudTermsLanguage();
+      updateClassroomCardsLanguage();
       const activeIndex = Math.max(0, stepButtons.findIndex((button) => button.classList.contains('active')));
       setStep(activeIndex, { force: true });
+      setCloudLayer(currentCloudLayer);
+      const bridgeIndex = currentBridgeIndex >= 0 ? currentBridgeIndex : 0;
+      currentBridgeIndex = -1;
+      setBridgeActive(bridgeIndex);
+      setVisualActive(currentVisualIndex >= 0 ? currentVisualIndex : 0, { force: true });
     }
 
     function updateSimulationScroll() {
@@ -4113,7 +4359,7 @@
           cloudStage.style.setProperty('--detail-top', `${y.toFixed(1)}px`);
         }
       }
-      const data = cloudData[safeIndex];
+      const data = (currentLang === 'en' ? translatedData.cloud.en[safeIndex] : cloudData[safeIndex]) || cloudData[safeIndex];
       if (cloudLabel) cloudLabel.textContent = data.label;
       if (cloudTitle) cloudTitle.textContent = data.title;
       if (cloudCopy) cloudCopy.textContent = data.copy;
@@ -4210,6 +4456,7 @@
       if (!classroomGrid || !classroomCards.length) return;
       const safeIndex = clamp(Number(index) || 0, 0, classroomCards.length - 1);
       classroomGrid.dataset.activeClassroom = String(safeIndex);
+      classroomGrid.classList.add('has-active');
       classroomCards.forEach((card, cardIndex) => {
         const isActive = cardIndex === safeIndex;
         card.classList.toggle('active', isActive);
@@ -4221,11 +4468,19 @@
       if (classroomDetailCopy) classroomDetailCopy.textContent = data.copy;
     }
 
+    function clearClassroomActive() {
+      if (!classroomGrid) return;
+      classroomGrid.classList.remove('has-active');
+      classroomCards.forEach((card) => {
+        card.classList.remove('active');
+        card.setAttribute('aria-pressed', 'false');
+      });
+    }
+
     function updateClassroomScroll() {
       if (!classroomSection || !classroomCards.length) return;
       if (reduceMotion || window.innerWidth <= 640) {
         classroomCards.forEach((card) => card.classList.add('is-visible'));
-        setClassroomActive(Number(classroomGrid?.dataset.activeClassroom) || 0);
         return;
       }
       const progress = sectionProgress(classroomSection);
@@ -4235,7 +4490,7 @@
       classroomCards.forEach((card, cardIndex) => {
         card.classList.toggle('is-visible', cardIndex < visibleCount);
       });
-      if (visibleCount > 0) setClassroomActive(Math.max(0, visibleCount - 1));
+      if (visibleCount === 0) clearClassroomActive();
     }
 
     function updateClassroomPointer(event) {
@@ -4246,26 +4501,32 @@
       classroomGrid.style.setProperty('--classroom-move-x', `${x.toFixed(2)}px`);
       classroomGrid.style.setProperty('--classroom-move-y', `${y.toFixed(2)}px`);
 
-      let nearestIndex = Number(classroomGrid.dataset.activeClassroom) || 0;
-      let nearestDistance = Infinity;
+      let matchedIndex = -1;
       classroomCards.forEach((card, cardIndex) => {
         if (!card.classList.contains('is-visible')) return;
         const cardRect = card.getBoundingClientRect();
-        const centerX = cardRect.left + cardRect.width / 2;
-        const centerY = cardRect.top + cardRect.height / 2;
-        const distance = Math.hypot(event.clientX - centerX, event.clientY - centerY);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestIndex = cardIndex;
+        const pad = 26;
+        const isInsideReach =
+          event.clientX >= cardRect.left - pad &&
+          event.clientX <= cardRect.right + pad &&
+          event.clientY >= cardRect.top - pad &&
+          event.clientY <= cardRect.bottom + pad;
+        if (isInsideReach) {
+          matchedIndex = cardIndex;
         }
       });
-      setClassroomActive(nearestIndex);
+      if (matchedIndex >= 0) {
+        setClassroomActive(matchedIndex);
+      } else {
+        clearClassroomActive();
+      }
     }
 
     function resetClassroomPointer() {
       if (!classroomGrid) return;
       classroomGrid.style.setProperty('--classroom-move-x', '0px');
       classroomGrid.style.setProperty('--classroom-move-y', '0px');
+      clearClassroomActive();
     }
 
     function formatBridgeTime(seconds) {
@@ -4295,7 +4556,7 @@
 
     function setBridgeActive(index, options = {}) {
       const safeIndex = clamp(Number(index) || 0, 0, bridgeStepData.length - 1);
-      const data = bridgeStepData[safeIndex];
+      const data = translated('bridge', safeIndex, bridgeStepData);
       if (!options.force && currentBridgeIndex === safeIndex) {
         if (options.seekToStart) seekBridgeVideo(data.start + .05);
         return;
@@ -4371,7 +4632,8 @@
       const safeIndex = clamp(Number(index) || 0, 0, visualWorldItems.length - 1);
       if (!options.force && !options.focusThumb && currentVisualIndex === safeIndex) return;
       currentVisualIndex = safeIndex;
-      const data = visualWorldItems[safeIndex];
+      const source = visualWorldItems[safeIndex];
+      const data = translated('visual', safeIndex, visualWorldItems);
       const displayIndex = String(safeIndex + 1).padStart(2, '0');
       let activeThumb = null;
       if (visualBrowser) visualBrowser.dataset.activeVisual = String(safeIndex);
@@ -4384,9 +4646,9 @@
       });
       if (options.focusThumb && activeThumb) activeThumb.focus({ preventScroll: true });
       if (visualMainImage) {
-        const shouldAnimate = visualMainImage.getAttribute('src') !== data.src && !reduceMotion;
-        visualMainImage.src = data.src;
-        visualMainImage.alt = data.alt;
+        const shouldAnimate = visualMainImage.getAttribute('src') !== source.src && !reduceMotion;
+        visualMainImage.src = source.src;
+        visualMainImage.alt = data.alt || source.alt;
         if (shouldAnimate) {
           visualMainImage.animate([
             { opacity: .62, transform: 'scale(1.018)' },
@@ -4493,12 +4755,13 @@
       trialForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const email = trialEmail.value.trim();
+        const staticText = translatedData.static[currentLang] || translatedData.static.zh;
         if (!trialEmail.checkValidity() || !email) {
-          trialStatus.textContent = '請輸入有效電郵地址。';
+          trialStatus.textContent = staticText.trialInvalid;
           trialEmail.focus();
           return;
         }
-        trialStatus.textContent = '已記下電郵，稍後可接駁試玩申請系統。';
+        trialStatus.textContent = staticText.trialSuccess;
         trialForm.reset();
       });
     }
