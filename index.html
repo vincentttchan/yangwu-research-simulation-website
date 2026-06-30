@@ -1,0 +1,4035 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>自強三十年 | The Self-Strengthening Edition</title>
+  <link rel="preload" as="image" href="website_assets/game_screens_v7/08-city-shanghai-clean.webp">
+  <style>
+    :root {
+      --black: #050403;
+      --black-2: #100c08;
+      --black-3: #17100b;
+      --ivory: #fff8eb;
+      --paper: #efe2c4;
+      --paper-2: #f8efd8;
+      --gold: #d4a146;
+      --gold-2: #f0c66d;
+      --rust: #b13a2e;
+      --jade: #2f8d7a;
+      --muted: #8c7a64;
+      --line: rgba(255,248,235,.16);
+      --paper-line: rgba(77, 50, 22, .18);
+      --radius: 22px;
+      --wide: min(1320px, calc(100% - 48px));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--black); }
+    body {
+      margin: 0;
+      color: var(--ivory);
+      background: var(--black);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent calc(25% - 1px), rgba(255,255,255,.035) 25%, transparent calc(25% + 1px)),
+        linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,255,255,.04) 50%, transparent calc(50% + 1px)),
+        linear-gradient(90deg, transparent calc(75% - 1px), rgba(255,255,255,.035) 75%, transparent calc(75% + 1px));
+      opacity: .65;
+      mix-blend-mode: screen;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    h1, h2, h3, p { margin: 0; }
+    p { line-height: 1.68; }
+    strong { font-weight: 900; }
+
+    [data-lang="zh"] [data-en],
+    [data-lang="en"] [data-zh] {
+      display: none !important;
+    }
+
+    .nav {
+      position: fixed;
+      z-index: 60;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 0 28px;
+      color: rgba(255,248,235,.88);
+      background: linear-gradient(180deg, rgba(5,4,3,.9), rgba(5,4,3,.18));
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 820;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border: 1px solid rgba(255,248,235,.65);
+      border-radius: 6px;
+      background:
+        radial-gradient(circle at 50% 50%, var(--gold) 0 2px, transparent 3px),
+        linear-gradient(135deg, rgba(212,161,70,.32), rgba(177,58,46,.22));
+    }
+
+    .edition-label { color: rgba(255,248,235,.48); font-weight: 600; }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid rgba(255,248,235,.1);
+      border-radius: 999px;
+      background: rgba(255,248,235,.045);
+    }
+
+    .nav-center a {
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: rgba(255,248,235,.58);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .nav-center a.active,
+    .nav-center a:hover {
+      color: var(--ivory);
+      background: rgba(255,248,235,.12);
+    }
+
+    .nav-right {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid rgba(255,248,235,.12);
+      border-radius: 999px;
+      background: rgba(255,248,235,.045);
+    }
+
+    .lang-toggle button {
+      min-width: 42px;
+      min-height: 34px;
+      border: 0;
+      border-radius: 999px;
+      color: rgba(255,248,235,.58);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    [data-lang="zh"] .lang-toggle button[data-set-lang="zh"],
+    [data-lang="en"] .lang-toggle button[data-set-lang="en"] {
+      color: #17100b;
+      background: var(--ivory);
+    }
+
+    .nav-search {
+      color: rgba(255,248,235,.7);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .pill-cta,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 999px;
+      color: var(--black);
+      background: var(--ivory);
+      font-weight: 900;
+      transition: transform .22s ease, background .22s ease, color .22s ease, border-color .22s ease;
+    }
+
+    .btn.dark {
+      color: var(--ivory);
+      background: rgba(255,248,235,.08);
+      border-color: rgba(255,248,235,.2);
+    }
+
+    .btn.gold {
+      color: #1b1007;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      border-color: rgba(255,248,235,.24);
+    }
+
+    .pill-cta:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .opening {
+      position: relative;
+      min-height: 230vh;
+      background: var(--black);
+    }
+
+    .opening-stage {
+      position: sticky;
+      top: 0;
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      max-width: 100vw;
+      padding: 88px 24px 48px;
+      isolation: isolate;
+    }
+
+    .opening-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(212,161,70,.18), transparent 38%),
+        linear-gradient(180deg, rgba(5,4,3,.38), rgba(5,4,3,.94)),
+        url("website_assets/game_screens_v7/08-city-shanghai-clean.webp") center / cover;
+      opacity: calc(.30 + var(--intro, 0) * .38);
+      transform: scale(calc(1.08 - var(--intro, 0) * .035));
+      transition: opacity .1s linear, transform .1s linear;
+    }
+
+    .geometry {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: calc(.32 + var(--intro, 0) * .36);
+    }
+
+    .geometry::before,
+    .geometry::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 78vw;
+      height: 78vw;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(calc(var(--intro, 0) * 28deg));
+    }
+
+    .geometry::after {
+      width: 52vw;
+      height: 104vw;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(calc(-16deg - var(--intro, 0) * 20deg));
+      opacity: .6;
+    }
+
+    .route-lines {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: calc(.12 + var(--intro, 0) * .58);
+    }
+
+    .route-lines svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .route-lines path,
+    .route-lines line,
+    .route-lines rect {
+      fill: none;
+      stroke: rgba(255,248,235,.22);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .route-lines path {
+      stroke-dasharray: 900;
+      stroke-dashoffset: calc(900 - var(--intro, 0) * 900);
+    }
+
+    .edition-frame {
+      position: relative;
+      width: min(520px, 78vw);
+      min-height: min(520px, 78vw);
+      display: grid;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid rgba(255,248,235, calc(var(--intro-frame, 0) * .64));
+      background: transparent;
+      backdrop-filter: blur(calc(var(--intro-frame, 0) * 2px));
+      transform: translateY(calc((1 - var(--intro, 0)) * 22px));
+      box-shadow: 0 0 calc(var(--intro-frame, 0) * 80px) rgba(0,0,0,.25);
+    }
+
+    .edition-frame > div {
+      position: relative;
+      z-index: 1;
+    }
+
+    .edition-frame::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 -1px 0;
+      height: 2px;
+      background: var(--ivory);
+      transform: scaleX(var(--intro, 0));
+      transform-origin: left;
+      opacity: calc(var(--intro-frame, 0) * .7);
+    }
+
+    .edition-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(5,4,3,.34);
+      opacity: var(--intro-frame, 0);
+      pointer-events: none;
+    }
+
+    .edition-kicker {
+      color: var(--gold-2);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: var(--intro-kicker, 0);
+      transform: translateY(calc((1 - var(--intro-kicker, 0)) * 12px));
+      transition: opacity .18s linear, transform .18s linear;
+    }
+
+    .edition-title {
+      margin-top: 20px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: .92;
+      letter-spacing: 0;
+      color: var(--ivory);
+    }
+
+    .edition-title span {
+      display: block;
+      font-style: italic;
+      color: rgba(255,248,235,.78);
+      overflow-wrap: normal;
+      hyphens: manual;
+    }
+
+    .edition-copy {
+      margin: 26px auto 0;
+      max-width: 470px;
+      color: rgba(255,248,235,.74);
+      font-size: clamp(16px, 1.25vw, 19px);
+      font-weight: 620;
+      line-height: 1.72;
+      text-align: center;
+      text-wrap: balance;
+      opacity: var(--intro-copy, 0);
+      transform: translateY(calc((1 - var(--intro-copy, 0)) * 18px));
+      transition: opacity .18s linear, transform .18s linear;
+    }
+
+    .edition-copy::before {
+      content: "";
+      display: block;
+      width: 74px;
+      height: 1px;
+      margin: 0 auto 18px;
+      background: linear-gradient(90deg, transparent, rgba(212,161,70,.78), transparent);
+      transform: scaleX(var(--intro-copy, 0));
+      transition: transform .18s linear;
+    }
+
+    .edition-copy .copy-line {
+      display: block;
+      opacity: var(--intro-copy-one, 0);
+      transform: translateY(calc((1 - var(--intro-copy-one, 0)) * 8px));
+      transition: opacity .18s linear, transform .18s linear;
+    }
+
+    .edition-copy .copy-line + .copy-line {
+      margin-top: 6px;
+      color: var(--gold-2);
+      opacity: var(--intro-copy-two, 0);
+      transform: translateY(calc((1 - var(--intro-copy-two, 0)) * 8px));
+    }
+
+    .opening-footer {
+      position: absolute;
+      left: 50%;
+      bottom: 38px;
+      width: var(--wide);
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: rgba(255,248,235,.58);
+      font-size: 13px;
+      font-weight: 760;
+      opacity: var(--intro-footer, 0);
+      transition: opacity .18s linear;
+    }
+
+    .node {
+      position: absolute;
+      z-index: 2;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 8px rgba(212,161,70,.12);
+      opacity: var(--intro, 0);
+      transform: scale(calc(.65 + var(--intro, 0) * .55));
+    }
+
+    .node::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 1px solid rgba(240,198,109,.46);
+      background: radial-gradient(circle, rgba(240,198,109,.3), rgba(240,198,109,0) 64%);
+      opacity: calc(var(--intro, 0) * .72);
+      animation: node-pulse 2.9s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .node::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 16px;
+      top: -8px;
+      min-width: 120px;
+      color: rgba(255,248,235,.68);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .node.n1 { left: 12.6%; top: 70.5%; }
+    .node.n2 { left: 9.6%; top: 46.2%; }
+    .node.n3 { left: 92%; top: 36.3%; }
+    .node.n4 { left: 76.4%; top: 40.1%; }
+
+    .node.n2::before { animation-delay: .48s; }
+    .node.n3::before { animation-delay: .92s; }
+    .node.n4::before { animation-delay: 1.34s; }
+
+    .node:hover {
+      background: var(--gold-2);
+      box-shadow: 0 0 0 9px rgba(240,198,109,.16), 0 0 30px rgba(240,198,109,.34);
+    }
+
+    .node.n3::after {
+      left: auto;
+      right: 16px;
+      text-align: right;
+    }
+
+    @keyframes node-pulse {
+      0% {
+        opacity: calc(var(--intro, 0) * .6);
+        transform: scale(.45);
+      }
+      68% {
+        opacity: calc(var(--intro, 0) * .16);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.85);
+      }
+    }
+
+    .section {
+      position: relative;
+      padding: 118px 24px;
+      color: var(--black);
+      background: var(--paper);
+    }
+
+    .section.dark {
+      color: var(--ivory);
+      background: var(--black);
+    }
+
+    .section.soft {
+      background: #e8eee9;
+    }
+
+    .inner {
+      width: var(--wide);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .68fr);
+      gap: 54px;
+      align-items: end;
+      margin-bottom: 50px;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .label::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .section h2 {
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(42px, 5.4vw, 86px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .section-title-lock {
+      max-width: 11.5em;
+    }
+
+    .section-title-lock .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .dark .section-head p { color: rgba(255,248,235,.68); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .problem-map,
+    .problem-card {
+      min-height: 520px;
+      border: 1px solid var(--paper-line);
+      background: rgba(255,248,235,.42);
+    }
+
+    .problem-map {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 28px 90px rgba(44,30,14,.16);
+    }
+
+    .problem-map::after,
+    .visual-stage::after,
+    .gallery-main::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 38%, rgba(5,4,3,.78));
+      pointer-events: none;
+    }
+
+    .image-caption {
+      position: absolute;
+      z-index: 2;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      color: var(--ivory);
+      font-weight: 900;
+      text-shadow: 0 2px 18px rgba(0,0,0,.55);
+    }
+
+    .image-caption span {
+      display: block;
+      margin-top: 5px;
+      color: var(--gold-2);
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 760;
+    }
+
+    .problem-card {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: 42px;
+      border-radius: 4px;
+    }
+
+    .problem-card h3 {
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 38px;
+      line-height: 1.05;
+    }
+
+    .problem-card p { color: #4b3928; font-size: 19px; }
+
+    .learning-points {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .learning-points li {
+      position: relative;
+      padding-left: 22px;
+      color: #3e2d1e;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .learning-points li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .72em;
+      width: 9px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .design-response {
+      padding: 18px 20px;
+      border-left: 3px solid var(--gold);
+      color: #3c2b1c;
+      background: rgba(212,161,70,.14);
+      font-size: 18px;
+      line-height: 1.58;
+    }
+
+    .design-response strong {
+      color: #8b5a20;
+    }
+
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border: 1px solid rgba(90,58,25,.16);
+      border-radius: 999px;
+      color: #5c4124;
+      background: rgba(255,248,235,.54);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .problem-cloud {
+      position: relative;
+      min-height: min(92vh, 920px);
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background:
+        radial-gradient(circle at calc(50% + var(--cloud-move-x, 0px) * .2) calc(52% + var(--cloud-move-y, 0px) * .2), rgba(255,255,255,.42), transparent 18%),
+        radial-gradient(circle at 64% 38%, rgba(212,161,70,.08), transparent 24%),
+        linear-gradient(135deg, rgba(226,225,212,.98), rgba(218,217,203,.9));
+      box-shadow: none;
+      perspective: 1200px;
+      width: 100vw;
+      left: 50%;
+      margin-left: -50vw;
+    }
+
+    .problem-cloud::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(255,255,255,.38) 0 1px, transparent 2px),
+        linear-gradient(28deg, transparent 49.82%, rgba(90,80,58,.036) 50%, transparent 50.18%),
+        linear-gradient(144deg, transparent 49.82%, rgba(90,80,58,.032) 50%, transparent 50.18%);
+      background-size: 34% 34%, 40% 40%, 46% 46%;
+      opacity: .68;
+      pointer-events: none;
+    }
+
+    .problem-cloud::after {
+      content: "";
+      position: absolute;
+      inset: 3% 10%;
+      border: 1px solid rgba(74,67,48,.06);
+      border-radius: 999px;
+      transform: rotate(-12deg) translate3d(calc(var(--cloud-move-x, 0px) * -.08), calc(var(--cloud-move-y, 0px) * -.08), 0);
+      pointer-events: none;
+    }
+
+    .cloud-brand {
+      display: none;
+    }
+
+    .cloud-brand span {
+      display: block;
+    }
+
+    .cloud-panel {
+      display: none;
+    }
+
+    .cloud-panel small {
+      color: #2a281f;
+      font-weight: 950;
+    }
+
+    .cloud-panel h3 {
+      margin-top: 10px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 24px;
+      line-height: 1.05;
+    }
+
+    .cloud-panel p {
+      margin-top: 10px;
+      color: rgba(39,37,30,.68);
+      font-size: 15px;
+      font-weight: 650;
+      line-height: 1.58;
+    }
+
+    .cloud-map {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .cloud-map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .28;
+      pointer-events: none;
+    }
+
+    .cloud-map line {
+      stroke: rgba(74,67,48,.06);
+      stroke-width: .8;
+    }
+
+    .cloud-term {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      min-width: var(--w, auto);
+      transform: translate3d(calc(-50% + var(--cloud-move-x, 0px) * var(--depth, .14)), calc(-50% + var(--cloud-move-y, 0px) * var(--depth, .14)), 0) scale(var(--scale, 1));
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: rgba(47,45,36,var(--tone, .58));
+      background: transparent;
+      box-shadow: none;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(16px, var(--size, 2vw), 70px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0;
+      cursor: pointer;
+      opacity: var(--term-opacity, .46);
+      filter: blur(var(--blur, .8px)) contrast(.92);
+      transition: color .22s ease, opacity .22s ease, filter .22s ease, transform .32s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .cloud-term {
+      animation: cloudTermFloat var(--float-speed, 7s) ease-in-out infinite;
+      animation-delay: var(--float-delay, 0s);
+    }
+
+    @keyframes cloudTermFloat {
+      0%, 100% { margin-top: 0; }
+      50% { margin-top: -10px; }
+    }
+
+    .cloud-term::before {
+      content: "/";
+      color: rgba(47,45,36,.48);
+    }
+
+    .cloud-term.active,
+    .cloud-term:hover,
+    .cloud-term:focus-visible {
+      color: #2d2a20;
+      z-index: 5;
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(calc(-50% + var(--cloud-move-x, 0px) * var(--depth, .14)), calc(-50% + var(--cloud-move-y, 0px) * var(--depth, .14)), 0) scale(calc(var(--scale, 1) * 1.05));
+      outline: none;
+    }
+
+    .cloud-term:focus-visible {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 6px;
+    }
+
+    .cloud-term[data-kind="difficulty"] {
+      font-weight: 650;
+    }
+
+    .cloud-term[data-kind="factor"] {
+      color: rgba(47,45,36,var(--tone, .5));
+      font-style: normal;
+    }
+
+    .cloud-detail {
+      display: none;
+    }
+
+    .cloud-detail small {
+      color: #8b5a20;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .12em;
+    }
+
+    .cloud-detail h3 {
+      margin-top: 12px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(30px, 3.6vw, 54px);
+      line-height: .98;
+    }
+
+    .cloud-detail p {
+      margin-top: 16px;
+      color: rgba(47,44,33,.72);
+      font-size: 17px;
+      line-height: 1.65;
+      font-weight: 650;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .module {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+      display: grid;
+      align-content: end;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--black-2);
+      isolation: isolate;
+    }
+
+    .module img {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: .42;
+      filter: saturate(.82) contrast(1.08);
+      transition: transform .45s ease, opacity .45s ease;
+    }
+
+    .module::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(5,4,3,.18), rgba(5,4,3,.9));
+    }
+
+    .module:hover img {
+      transform: scale(1.08);
+      opacity: .64;
+    }
+
+    .module small {
+      color: var(--gold-2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .module h3 {
+      margin-top: 12px;
+      font-size: 30px;
+      line-height: 1.05;
+    }
+
+    .module p {
+      margin-top: 12px;
+      color: rgba(255,248,235,.72);
+    }
+
+    #modules {
+      min-height: 720vh;
+      padding-bottom: 0;
+    }
+
+    .simulation-intro {
+      margin-bottom: 36px;
+    }
+
+    .simulation-scroll-stage {
+      position: sticky;
+      top: 0;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 82px 24px 42px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,248,235,.045) 1px, transparent 1px),
+        radial-gradient(circle at 76% 24%, rgba(212,161,70,.16), transparent 32%),
+        var(--black);
+      background-size: 25% 100%, auto, auto;
+      isolation: isolate;
+    }
+
+    .simulation-layer-phase,
+    .simulation-flow-phase {
+      grid-area: 1 / 1;
+      width: var(--wide);
+      margin: 0 auto;
+      transition: opacity .58s ease, transform .72s cubic-bezier(.16, 1, .3, 1), filter .58s ease;
+    }
+
+    .simulation-layer-phase {
+      position: relative;
+      min-height: min(82svh, 860px);
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 6px;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(212,161,70,.14), transparent 64%),
+        linear-gradient(145deg, rgba(255,248,235,.052), rgba(255,248,235,.014));
+      box-shadow: 0 38px 150px rgba(0,0,0,.48);
+    }
+
+    .simulation-scroll-stage[data-simulation-phase="flow"] .simulation-layer-phase {
+      opacity: 0;
+      transform: scale(.98);
+      filter: blur(3px);
+      pointer-events: none;
+    }
+
+    .simulation-flow-phase {
+      opacity: 0;
+      transform: translateY(36px) scale(.985);
+      pointer-events: none;
+    }
+
+    .simulation-scroll-stage[data-simulation-phase="flow"] .simulation-flow-phase {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .simulation-map,
+    .simulation-layer {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 5px;
+      background: var(--black-2);
+      box-shadow: 0 22px 90px rgba(0,0,0,.4);
+    }
+
+    .simulation-map {
+      inset: 64px 7% 64px;
+      opacity: .74;
+      transform: scale(.995);
+      transition: opacity .7s ease, transform .82s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .simulation-map img {
+      filter: saturate(.76) contrast(1.08) brightness(.7);
+    }
+
+    .simulation-map::after,
+    .simulation-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(5,4,3,.08), rgba(5,4,3,.78));
+    }
+
+    .simulation-layer {
+      opacity: 0;
+      transform: translateY(34px) scale(.96);
+      transition: opacity .7s ease, transform .82s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .simulation-scroll-stage[data-layer-step="1"] .simulation-city,
+    .simulation-scroll-stage[data-layer-step="2"] .simulation-city,
+    .simulation-scroll-stage[data-layer-step="3"] .simulation-city,
+    .simulation-scroll-stage[data-layer-step="4"] .simulation-city,
+    .simulation-scroll-stage[data-layer-step="2"] .simulation-source,
+    .simulation-scroll-stage[data-layer-step="3"] .simulation-source,
+    .simulation-scroll-stage[data-layer-step="4"] .simulation-source,
+    .simulation-scroll-stage[data-layer-step="3"] .simulation-decision,
+    .simulation-scroll-stage[data-layer-step="4"] .simulation-decision,
+    .simulation-scroll-stage[data-layer-step="4"] .simulation-consequence {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .simulation-scroll-stage[data-layer-step="1"] .simulation-map,
+    .simulation-scroll-stage[data-layer-step="2"] .simulation-map,
+    .simulation-scroll-stage[data-layer-step="3"] .simulation-map,
+    .simulation-scroll-stage[data-layer-step="4"] .simulation-map {
+      opacity: .38;
+      transform: scale(1.018);
+    }
+
+    .simulation-city {
+      left: 8%;
+      top: 94px;
+      width: 30%;
+      height: 260px;
+    }
+
+    .simulation-source {
+      right: 8%;
+      top: 118px;
+      width: 34%;
+      height: 290px;
+    }
+
+    .simulation-decision {
+      left: 13%;
+      bottom: 82px;
+      width: 31%;
+      height: 310px;
+    }
+
+    .simulation-consequence {
+      right: 13%;
+      bottom: 82px;
+      width: 33%;
+      height: 310px;
+    }
+
+    .simulation-layer img {
+      filter: saturate(.82) contrast(1.08) brightness(.84);
+      transition: transform .7s ease;
+    }
+
+    .simulation-layer:hover img {
+      transform: scale(1.045);
+    }
+
+    .simulation-caption {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      color: var(--ivory);
+      text-shadow: 0 2px 18px rgba(0,0,0,.66);
+    }
+
+    .simulation-caption small,
+    .flow-copy small,
+    .flow-tab span {
+      color: var(--gold-2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .simulation-caption h3 {
+      margin-top: 8px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 30px;
+      line-height: 1.04;
+    }
+
+    .simulation-caption p {
+      max-width: 500px;
+      margin-top: 8px;
+      color: rgba(255,248,235,.74);
+      font-size: 14px;
+      line-height: 1.48;
+    }
+
+    .flow-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .flow-tab {
+      min-height: 54px;
+      padding: 8px 10px;
+      color: rgba(255,248,235,.58);
+      border: 1px solid rgba(255,248,235,.11);
+      border-radius: 5px;
+      background: rgba(255,248,235,.04);
+      cursor: pointer;
+      transition: color .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .flow-tab b {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
+    .flow-tab.active {
+      color: var(--ivory);
+      border-color: rgba(212,161,70,.72);
+      background: rgba(212,161,70,.13);
+    }
+
+    .flow-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.62fr) minmax(270px, .48fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .flow-visual {
+      position: relative;
+      min-height: min(70svh, 720px);
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 5px;
+      background: var(--black-2);
+      box-shadow: 0 36px 130px rgba(0,0,0,.48);
+    }
+
+    .flow-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.035);
+      transition: opacity .4s ease, transform .65s ease;
+    }
+
+    .flow-slide img,
+    .flow-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.82) contrast(1.05) brightness(.86);
+    }
+
+    .flow-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .flow-copy {
+      display: grid;
+      align-content: center;
+      min-height: min(70svh, 720px);
+      padding: 24px;
+      border: 1px solid rgba(255,248,235,.12);
+      border-radius: 5px;
+      background: rgba(255,248,235,.045);
+    }
+
+    .flow-copy h3 {
+      margin-top: 16px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 38px;
+      line-height: 1.02;
+    }
+
+    .flow-copy p {
+      margin-top: 18px;
+      color: rgba(255,248,235,.72);
+      font-size: 17px;
+    }
+
+    .purpose-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .purpose-tags span {
+      padding: 7px 10px;
+      border: 1px solid rgba(212,161,70,.24);
+      border-radius: 999px;
+      color: var(--gold-2);
+      background: rgba(212,161,70,.08);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .bridge-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .claim-strip {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 3px solid var(--rust);
+      color: #4b3928;
+      background: rgba(177,58,46,.09);
+      font-weight: 760;
+    }
+
+    .dark .claim-strip {
+      color: rgba(255,248,235,.78);
+      background: rgba(177,58,46,.14);
+    }
+
+    .flow-card {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--paper-line);
+      background: rgba(255,248,235,.52);
+      display: grid;
+      align-content: space-between;
+    }
+
+    .flow-card small {
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .flow-card b { font-size: 18px; }
+
+    #bridge {
+      min-height: auto;
+    }
+
+    .evidence-board {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .evidence-fragments {
+      position: relative;
+      min-height: min(62vh, 650px);
+      overflow: hidden;
+      border: 1px solid var(--paper-line);
+      border-radius: 5px;
+      background:
+        linear-gradient(135deg, rgba(255,248,235,.6), rgba(255,248,235,.28)),
+        radial-gradient(circle at 32% 38%, rgba(212,161,70,.18), transparent 36%);
+    }
+
+    .evidence-fragments::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent calc(33.33% - 1px), rgba(77,50,22,.07) 33.33%, transparent calc(33.33% + 1px)),
+        linear-gradient(90deg, transparent calc(66.66% - 1px), rgba(77,50,22,.07) 66.66%, transparent calc(66.66% + 1px));
+      pointer-events: none;
+    }
+
+    .source-fragment {
+      position: absolute;
+      width: min(360px, 34%);
+      min-height: 142px;
+      padding: 18px;
+      border: 1px solid rgba(77,50,22,.16);
+      border-radius: 4px;
+      background: rgba(255,248,235,.72);
+      box-shadow: 0 20px 60px rgba(67,43,20,.12);
+      opacity: .5;
+      filter: blur(.8px) saturate(.86);
+      transform: translateY(12px) scale(.98) rotate(var(--tilt, 0deg));
+      transition: opacity .28s ease, filter .28s ease, transform .34s cubic-bezier(.16, 1, .3, 1), box-shadow .28s ease, border-color .28s ease;
+    }
+
+    .source-fragment.active,
+    .source-fragment:hover,
+    .source-fragment:focus-visible {
+      opacity: 1;
+      filter: blur(0) saturate(1);
+      transform: translateY(0) scale(1.015) rotate(var(--tilt, 0deg));
+      border-color: rgba(177,58,46,.28);
+      box-shadow: 0 26px 72px rgba(67,43,20,.18);
+      outline: none;
+    }
+
+    .source-fragment:nth-child(1) { left: 5%; top: 8%; --tilt: -1deg; }
+    .source-fragment:nth-child(2) { right: 9%; top: 15%; --tilt: 1.3deg; }
+    .source-fragment:nth-child(3) { left: 16%; top: 43%; --tilt: 1deg; }
+    .source-fragment:nth-child(4) { right: 7%; top: 50%; --tilt: -1.2deg; }
+    .source-fragment:nth-child(5) { left: 10%; bottom: 6%; --tilt: -.5deg; }
+    .source-fragment:nth-child(6) { right: 18%; bottom: 7%; --tilt: .8deg; }
+
+    .source-fragment small,
+    .logic-step small {
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .source-fragment b {
+      display: block;
+      margin-top: 8px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    .source-fragment p {
+      margin-top: 8px;
+      color: #5c4936;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .writing-logic {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0;
+      align-content: stretch;
+      position: relative;
+      padding: 24px;
+      border: 1px solid var(--paper-line);
+      border-radius: 5px;
+      background: rgba(255,248,235,.48);
+    }
+
+    .writing-logic::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 45px;
+      height: 1px;
+      background: rgba(77,50,22,.16);
+    }
+
+    .logic-step {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      align-items: start;
+      padding: 8px 16px 4px;
+      border-left: 1px solid rgba(77,50,22,.12);
+      background: transparent;
+      opacity: .46;
+      filter: blur(.45px);
+      transform: translateY(8px);
+      transition: opacity .28s ease, filter .28s ease, transform .34s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .logic-step:first-child {
+      border-left: 0;
+    }
+
+    .logic-step small {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: rgba(255,248,235,.82);
+      background: rgba(177,58,46,.5);
+      border-radius: 999px;
+      box-shadow: 0 0 0 5px rgba(255,248,235,.62);
+    }
+
+    .logic-step.active,
+    .logic-step:hover,
+    .logic-step:focus-visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+      outline: none;
+    }
+
+    .logic-step b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .logic-step p {
+      margin-top: 5px;
+      color: #5c4936;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .writing-workbench {
+      display: block;
+      margin-top: 36px;
+    }
+
+    #bridge .claim-strip {
+      display: none;
+    }
+
+    #bridge .section-head {
+      margin-bottom: 12px;
+    }
+
+    #bridge .section-head p {
+      max-width: 560px;
+    }
+
+    .writing-cards {
+      position: relative;
+      min-height: min(88vh, 900px);
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(255,255,255,.36), transparent 18%),
+        linear-gradient(135deg, rgba(229,228,215,.96), rgba(219,218,204,.82));
+      perspective: 1200px;
+    }
+
+    .writing-cards::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        linear-gradient(28deg, transparent 49.85%, rgba(77,50,22,.07) 50%, transparent 50.15%),
+        linear-gradient(146deg, transparent 49.85%, rgba(77,50,22,.055) 50%, transparent 50.15%);
+      background-size: 34% 34%, 41% 41%;
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .writing-card {
+      position: absolute;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      width: var(--card-w, min(420px, 42%));
+      max-width: min(460px, 34vw);
+      min-height: var(--card-min, 118px);
+      padding: 22px 24px;
+      border: 1px solid rgba(255,255,255,.62);
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 22px 58px rgba(67,43,20,.11);
+      opacity: var(--card-opacity, .46);
+      filter: blur(var(--card-blur, 1.8px)) saturate(.82);
+      transform: translate3d(0, var(--card-y, 12px), 0) scale(var(--card-scale, .94)) rotate(var(--tilt, 0deg));
+      transition: opacity .28s ease, filter .28s ease, transform .34s cubic-bezier(.16, 1, .3, 1), box-shadow .28s ease, border-color .28s ease, background .28s ease;
+      cursor: pointer;
+    }
+
+    .writing-card.active,
+    .writing-card:hover {
+      z-index: 6;
+      opacity: 1;
+      filter: blur(0) saturate(1);
+      transform: translate3d(0, 0, 0) scale(var(--active-scale, 1.012)) rotate(var(--tilt, 0deg));
+      border-color: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 36px 92px rgba(67,43,20,.16), 0 0 90px rgba(177,58,46,.16);
+      outline: none;
+    }
+
+    .writing-card:focus-visible {
+      z-index: 7;
+      opacity: 1;
+      filter: blur(0) saturate(1);
+      transform: translate3d(0, 0, 0) scale(var(--active-scale, 1.012)) rotate(var(--tilt, 0deg));
+      border-color: rgba(177,58,46,.42);
+      box-shadow: 0 36px 92px rgba(67,43,20,.16), 0 0 0 4px rgba(177,58,46,.22);
+      outline: 2px solid rgba(177,58,46,.72);
+      outline-offset: 4px;
+    }
+
+    .writing-card:nth-child(1) {
+      left: 8%;
+      top: 12%;
+      --tilt: -1deg;
+      --card-w: min(360px, 34%);
+      --card-opacity: .5;
+      --card-blur: 2.2px;
+      --card-scale: .86;
+    }
+    .writing-card:nth-child(2) {
+      left: 34%;
+      top: 24%;
+      --tilt: .8deg;
+      --card-w: min(350px, 34%);
+      --card-opacity: .55;
+      --card-blur: 1.8px;
+      --card-scale: .88;
+    }
+    .writing-card:nth-child(3) {
+      left: auto;
+      right: 8%;
+      top: 10%;
+      z-index: 3;
+      width: min(520px, 46%);
+      min-height: 150px;
+      --tilt: 0deg;
+      --card-opacity: .98;
+      --card-blur: 0px;
+      --card-scale: 1;
+      --active-scale: 1.025;
+      transform: scale(var(--card-scale, 1));
+    }
+    .writing-card:nth-child(3).active,
+    .writing-card:nth-child(3):hover,
+    .writing-card:nth-child(3):focus-visible {
+      transform: scale(var(--active-scale, 1.025));
+    }
+    .writing-card:nth-child(4) {
+      right: 11%;
+      top: 48%;
+      --tilt: .6deg;
+      --card-w: min(440px, 42%);
+      --card-opacity: .42;
+      --card-blur: 2.6px;
+      --card-scale: .9;
+    }
+    .writing-card:nth-child(5) {
+      left: 31%;
+      bottom: 10%;
+      --tilt: -1deg;
+      --card-w: min(360px, 34%);
+      --card-opacity: .36;
+      --card-blur: 3px;
+      --card-scale: .84;
+    }
+    .writing-card:nth-child(6) {
+      left: 8%;
+      bottom: 11%;
+      z-index: 2;
+      --tilt: .4deg;
+      --card-w: min(300px, 28%);
+      --card-opacity: .34;
+      --card-blur: 3.2px;
+      --card-scale: .82;
+      transform: scale(var(--card-scale, .82)) rotate(var(--tilt, 0deg));
+    }
+    .writing-card:nth-child(6).active,
+    .writing-card:nth-child(6):hover,
+    .writing-card:nth-child(6):focus-visible {
+      transform: scale(var(--active-scale, 1.012)) rotate(var(--tilt, 0deg));
+    }
+
+    .writing-card img,
+    .writing-card video {
+      display: none;
+    }
+
+    .writing-card:nth-child(3) img,
+    .writing-card:nth-child(3) video {
+      display: none;
+    }
+
+    .writing-card small {
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .1em;
+    }
+
+    .writing-card b {
+      display: block;
+      margin-top: 8px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 21px;
+      line-height: 1.08;
+    }
+
+    .writing-card p {
+      margin-top: 8px;
+      color: #5c4936;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .draft-lines {
+      display: grid;
+      gap: 9px;
+      margin-top: 28px;
+    }
+
+    .draft-lines span {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(177,58,46,.32), rgba(212,161,70,.14));
+    }
+
+    .draft-lines span:nth-child(2) { width: 78%; }
+    .draft-lines span:nth-child(3) { width: 52%; }
+
+    .writing-card.evidence-text {
+      grid-template-columns: 1fr;
+    }
+
+    .writing-card.evidence-text blockquote {
+      margin: 0;
+      color: #3e2d1e;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .argument-question {
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(77,50,22,.14);
+    }
+
+    .argument-question small {
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .12em;
+    }
+
+    .argument-question p {
+      margin-top: 10px;
+      color: #3f2f21;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(21px, 2.2vw, 34px);
+      font-weight: 760;
+      line-height: 1.18;
+    }
+
+    .argument-role {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 18px;
+      padding: 7px 10px;
+      border: 1px solid rgba(177,58,46,.22);
+      border-radius: 999px;
+      color: #8e352c;
+      background: rgba(177,58,46,.08);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .argument-lines {
+      display: grid;
+      gap: 11px;
+      margin-top: 26px;
+    }
+
+    .argument-line {
+      position: relative;
+      padding-left: 18px;
+      color: rgba(63,47,33,.42);
+      font-size: 15px;
+      line-height: 1.62;
+      filter: blur(.28px);
+      transition: color .24s ease, filter .24s ease, transform .24s ease;
+    }
+
+    .argument-line::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .72em;
+      width: 8px;
+      height: 1px;
+      background: rgba(177,58,46,.44);
+    }
+
+    .argument-line.active {
+      color: #3f2f21;
+      filter: blur(0);
+      transform: translateX(4px);
+      font-weight: 760;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+
+    .gallery-main,
+    .gallery-stack figure {
+      position: relative;
+      margin: 0;
+      min-height: 690px;
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 4px;
+      background: var(--black-2);
+    }
+
+    .gallery-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .gallery-stack figure { min-height: 216px; }
+
+    .visual-browser {
+      position: sticky;
+      top: 86px;
+      display: grid;
+      grid-template-columns: minmax(78px, 8vw) minmax(0, 1fr);
+      gap: clamp(16px, 2.2vw, 34px);
+      align-items: stretch;
+      min-height: min(78svh, 820px);
+      outline: none;
+    }
+
+    #visual-world {
+      min-height: 620vh;
+      padding-bottom: 0;
+    }
+
+    #visual-world .inner {
+      position: relative;
+      min-height: 560vh;
+    }
+
+    .visual-scroll-steps {
+      position: absolute;
+      inset: 0 0 auto 0;
+      pointer-events: none;
+    }
+
+    .visual-scroll-step {
+      height: 92vh;
+    }
+
+    .visual-browser:focus-visible {
+      outline: 2px solid rgba(212,161,70,.72);
+      outline-offset: 8px;
+    }
+
+    .visual-thumbs {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+    }
+
+    .visual-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1.08;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 4px;
+      background: var(--black-2);
+      cursor: pointer;
+      opacity: .42;
+      filter: saturate(.65) contrast(.95);
+      transform: translateX(0);
+      transition: opacity .24s ease, filter .24s ease, transform .28s cubic-bezier(.16, 1, .3, 1), border-color .24s ease;
+    }
+
+    .visual-thumb::before {
+      content: attr(data-step-label);
+      position: absolute;
+      z-index: 2;
+      left: 8px;
+      top: 8px;
+      color: rgba(255,248,235,.8);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      font-weight: 900;
+      text-shadow: 0 1px 8px rgba(0,0,0,.5);
+    }
+
+    .visual-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      pointer-events: none;
+      transition: border-color .24s ease;
+    }
+
+    .visual-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .visual-thumb.active,
+    .visual-thumb:hover,
+    .visual-thumb:focus-visible {
+      opacity: 1;
+      filter: saturate(.96) contrast(1.04);
+      transform: translateX(8px);
+      border-color: rgba(212,161,70,.42);
+      outline: none;
+    }
+
+    .visual-thumb.active::after,
+    .visual-thumb:focus-visible::after {
+      border-color: rgba(212,161,70,.74);
+    }
+
+    .visual-stage {
+      position: relative;
+      min-height: min(78svh, 820px);
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255,248,235,.14);
+      border-radius: 5px;
+      background: var(--black-2);
+      box-shadow: 0 42px 140px rgba(0,0,0,.54);
+    }
+
+    .visual-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5,4,3,.18), transparent 28%, rgba(5,4,3,.18)),
+        linear-gradient(0deg, rgba(5,4,3,.22), transparent 36%);
+      pointer-events: none;
+    }
+
+    .visual-main-image {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      display: block;
+      object-fit: cover;
+      filter: saturate(.86) contrast(1.07) brightness(.88);
+    }
+
+    .visual-meta {
+      position: absolute;
+      right: clamp(18px, 3vw, 44px);
+      bottom: clamp(118px, 12vh, 168px);
+      z-index: 3;
+      width: min(560px, 48vw);
+      min-width: 0;
+      padding: 22px 24px 24px;
+      border: 1px solid rgba(255,248,235,.14);
+      background: linear-gradient(135deg, rgba(5,4,3,.68), rgba(5,4,3,.38));
+      color: rgba(255,248,235,.76);
+      backdrop-filter: blur(12px);
+    }
+
+    .visual-count {
+      color: var(--gold-2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+
+    .visual-index {
+      position: absolute;
+      right: 18px;
+      top: -54px;
+      color: rgba(255,248,235,.12);
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(58px, 8vw, 118px);
+      font-weight: 700;
+      line-height: .78;
+      letter-spacing: 0;
+    }
+
+    .visual-meta small {
+      display: block;
+      margin-top: 14px;
+      color: rgba(212,161,70,.82);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    .visual-meta h3 {
+      margin-top: 12px;
+      color: var(--ivory);
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(30px, 2.8vw, 46px);
+      line-height: 1;
+      overflow-wrap: anywhere;
+    }
+
+    .visual-meta p {
+      max-width: 36ch;
+      margin-top: 12px;
+      color: rgba(255,248,235,.68);
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 620;
+      overflow-wrap: break-word;
+    }
+
+    .classroom-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .classroom-grid::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(51,69,60,.28), transparent);
+      pointer-events: none;
+    }
+
+    .readiness-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .class-card {
+      position: relative;
+      min-height: 240px;
+      padding: 28px;
+      border: 1px solid rgba(47,141,122,.18);
+      background: rgba(255,248,235,.64);
+      border-radius: 4px;
+    }
+
+    .class-card small {
+      color: var(--jade);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .14em;
+    }
+
+    .class-card h3 {
+      margin-top: 18px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 32px;
+    }
+
+    .class-card p {
+      margin-top: 16px;
+      color: #42564f;
+    }
+
+    /* Editorial replacement for the three learning-meaning sections. */
+    #problem,
+    #bridge,
+    #classroom {
+      isolation: isolate;
+    }
+
+    #problem {
+      padding-top: clamp(132px, 15vh, 180px);
+      padding-bottom: 0;
+      min-height: 230svh;
+      background: #e9e3cf;
+      color: #2f2c22;
+    }
+
+    #problem .inner {
+      width: 100%;
+      max-width: none;
+      min-height: 230svh;
+    }
+
+    #problem .section-head {
+      position: relative;
+      z-index: 4;
+      width: var(--wide);
+      margin: 0 auto -4vh;
+      grid-template-columns: minmax(0, 1.04fr) minmax(280px, .52fr);
+      align-items: end;
+      pointer-events: none;
+    }
+
+    #problem .section-head h2 {
+      max-width: 620px;
+      color: rgba(38,35,26,.92);
+      font-size: clamp(34px, 4.3vw, 68px);
+      line-height: 1.02;
+    }
+
+    #problem .section-head p {
+      max-width: 420px;
+      color: rgba(41,38,29,.62);
+      font-size: clamp(15px, 1.25vw, 18px);
+      line-height: 1.7;
+      font-weight: 720;
+    }
+
+    #problem .problem-cloud {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      min-height: 100svh;
+      margin-top: 0;
+      background:
+        radial-gradient(circle at calc(50% + var(--cloud-move-x, 0px) * .18) calc(52% + var(--cloud-move-y, 0px) * .18), rgba(255,255,255,.42), transparent 18%),
+        #e9e3cf;
+    }
+
+    #problem .problem-cloud::before {
+      background:
+        radial-gradient(circle at 18% 32%, rgba(255,255,255,.5) 0 1px, transparent 2px),
+        radial-gradient(circle at 42% 42%, rgba(255,255,255,.42) 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 28%, rgba(255,255,255,.45) 0 1px, transparent 2px),
+        radial-gradient(circle at 84% 66%, rgba(255,255,255,.4) 0 1px, transparent 2px);
+      background-size: 100% 100%;
+      opacity: .68;
+    }
+
+    #problem .problem-cloud::after {
+      display: none;
+    }
+
+    #problem .cloud-map svg {
+      display: none;
+    }
+
+    #problem .cloud-toggle {
+      position: absolute;
+      left: clamp(22px, 5vw, 76px);
+      top: clamp(96px, 12vh, 140px);
+      z-index: 8;
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid rgba(47,45,36,.12);
+      border-radius: 999px;
+      background: rgba(255,248,235,.38);
+      backdrop-filter: blur(14px);
+    }
+
+    #problem .cloud-toggle button {
+      min-width: 72px;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: rgba(47,45,36,.58);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    #problem .cloud-toggle button.active,
+    #problem .cloud-toggle button:hover,
+    #problem .cloud-toggle button:focus-visible {
+      color: #2f2c22;
+      background: rgba(255,248,235,.72);
+      box-shadow: 0 10px 30px rgba(73,58,29,.08);
+      outline: none;
+    }
+
+    #problem .cloud-term {
+      font-size: clamp(24px, var(--size, 2.4vw), 58px);
+      color: rgba(47,45,36,var(--tone, .5));
+      opacity: 0;
+      pointer-events: none;
+      filter: blur(9px) contrast(.9);
+      transform: translate3d(calc(-50% + var(--cloud-move-x, 0px) * var(--depth, .14)), calc(-36% + var(--cloud-move-y, 0px) * var(--depth, .14)), 0) scale(calc(var(--scale, 1) * .92));
+      transition: color .24s ease, opacity .36s ease, filter .36s ease, transform .46s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    #problem .cloud-term.is-visible {
+      opacity: var(--term-opacity, .46);
+      pointer-events: auto;
+      filter: blur(var(--blur, .8px)) contrast(.92);
+      transform: translate3d(calc(-50% + var(--cloud-move-x, 0px) * var(--depth, .14)), calc(-50% + var(--cloud-move-y, 0px) * var(--depth, .14)), 0) scale(var(--scale, 1));
+    }
+
+    #problem .cloud-term.is-visible.active,
+    #problem .cloud-term.is-visible:hover,
+    #problem .cloud-term.is-visible:focus-visible {
+      color: #2d2a20;
+      z-index: 5;
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(calc(-50% + var(--cloud-move-x, 0px) * var(--depth, .14)), calc(-50% + var(--cloud-move-y, 0px) * var(--depth, .14)), 0) scale(calc(var(--scale, 1) * 1.05));
+    }
+
+    #problem .cloud-term[hidden] {
+      display: none;
+    }
+
+    #problem .cloud-term[data-kind="student"] {
+      font-weight: 520;
+    }
+
+    #problem .cloud-term[data-kind="teacher"] {
+      font-weight: 520;
+      font-style: normal;
+    }
+
+    #problem .cloud-detail {
+      display: block;
+      position: absolute;
+      left: var(--detail-left, 50%);
+      top: var(--detail-top, 62%);
+      z-index: 7;
+      width: min(300px, calc(100% - 44px));
+      padding: 14px 16px;
+      border: 1px solid rgba(255,248,235,.12);
+      color: rgba(255,248,235,.9);
+      background: rgba(22,18,12,.88);
+      box-shadow: 0 24px 70px rgba(35,25,12,.24);
+      backdrop-filter: blur(18px);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: left .26s cubic-bezier(.16, 1, .3, 1), top .26s cubic-bezier(.16, 1, .3, 1), opacity .22s ease, transform .22s ease;
+    }
+
+    #problem .problem-cloud.has-visible .cloud-detail {
+      opacity: .96;
+      transform: translateY(0);
+    }
+
+    #problem .cloud-detail small {
+      color: var(--gold-2);
+    }
+
+    #problem .cloud-detail h3 {
+      margin-top: 8px;
+      font-size: clamp(22px, 2.1vw, 32px);
+      line-height: 1.02;
+    }
+
+    #problem .cloud-detail p {
+      margin-top: 10px;
+      color: rgba(255,248,235,.72);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    #bridge {
+      position: relative;
+      padding-top: clamp(148px, 17vh, 196px);
+      padding-bottom: clamp(84px, 12vh, 150px);
+      overflow: hidden;
+      background: #e9e3cf;
+      color: #2f2c22;
+    }
+
+    #bridge::before {
+      display: none;
+    }
+
+    #bridge .inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    #bridge .section-head {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 980px;
+      margin: 0 0 18px;
+      gap: 18px;
+    }
+
+    #bridge .section-head h2 {
+      max-width: 860px;
+      color: #2f2c22;
+      font-size: clamp(34px, 4vw, 62px);
+      line-height: 1.08;
+    }
+
+    #bridge .section-head p {
+      max-width: 640px;
+      color: rgba(47,45,36,.62);
+      font-size: clamp(15px, 1.22vw, 18px);
+      line-height: 1.75;
+      font-weight: 680;
+    }
+
+    #bridge .writing-workbench {
+      margin-top: 0;
+    }
+
+    #bridge .writing-cards {
+      min-height: min(88vh, 860px);
+      background:
+        radial-gradient(circle at 60% 32%, rgba(255,255,255,.42), transparent 19%),
+        linear-gradient(24deg, rgba(47,45,36,.035) 1px, transparent 1px),
+        linear-gradient(146deg, rgba(47,45,36,.03) 1px, transparent 1px),
+        #e9e3cf;
+      background-size: auto, 23vw 23vw, 31vw 31vw;
+      overflow: visible;
+    }
+
+    #bridge .writing-cards::before {
+      inset: -6% -12%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(212,161,70,.08), transparent 18%),
+        radial-gradient(circle at 72% 68%, rgba(47,141,122,.08), transparent 20%);
+      opacity: .78;
+    }
+
+    #bridge .writing-card {
+      border: 1px solid rgba(47,45,36,.08);
+      border-radius: 16px;
+      background: rgba(255,248,235,.82);
+      color: rgba(47,45,36,.4);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 32px 90px rgba(70,55,29,.1);
+      animation: promptFloat 7s ease-in-out infinite;
+      animation-delay: var(--float-delay, 0s);
+    }
+
+    #bridge .writing-card.active,
+    #bridge .writing-card:hover,
+    #bridge .writing-card:focus-visible {
+      border-color: rgba(47,45,36,.12);
+      background: rgba(255,248,235,.96);
+      color: #2f2c22;
+      box-shadow: 0 42px 120px rgba(70,55,29,.16), 0 0 100px rgba(212,161,70,.16);
+    }
+
+    #bridge .writing-card small {
+      color: rgba(154,95,30,.72);
+    }
+
+    #bridge .writing-card.active small,
+    #bridge .writing-card:hover small,
+    #bridge .writing-card:focus-visible small {
+      color: #9a5f1e;
+    }
+
+    #bridge .writing-card b {
+      font-size: clamp(22px, 2.25vw, 38px);
+      line-height: .98;
+    }
+
+    #bridge .writing-card p,
+    #bridge .writing-card blockquote {
+      color: inherit;
+      opacity: .78;
+    }
+
+    #bridge .writing-card:nth-child(1) {
+      left: 4%;
+      top: 17%;
+      --card-w: min(390px, 31vw);
+      --float-delay: -.8s;
+    }
+    #bridge .writing-card:nth-child(2) {
+      left: 34%;
+      top: 9%;
+      --card-w: min(360px, 29vw);
+      --float-delay: -2.1s;
+    }
+    #bridge .writing-card:nth-child(3) {
+      right: 5%;
+      top: 21%;
+      width: min(560px, 40vw);
+      --float-delay: -1.3s;
+    }
+    #bridge .writing-card:nth-child(4) {
+      right: 14%;
+      top: 55%;
+      --card-w: min(420px, 32vw);
+      --float-delay: -3.2s;
+    }
+    #bridge .writing-card:nth-child(5) {
+      left: 36%;
+      bottom: 6%;
+      --card-w: min(390px, 30vw);
+      --float-delay: -1.9s;
+    }
+    #bridge .writing-card:nth-child(6) {
+      left: 5%;
+      bottom: 16%;
+      --card-w: min(410px, 32vw);
+      --float-delay: -2.7s;
+    }
+
+    @keyframes promptFloat {
+      0%, 100% { margin-top: 0; }
+      50% { margin-top: -12px; }
+    }
+
+    #classroom {
+      position: relative;
+      padding-top: clamp(132px, 15vh, 176px);
+      background:
+        radial-gradient(circle at 80% 20%, rgba(47,141,122,.12), transparent 26%),
+        linear-gradient(180deg, #e9e3cf 0%, #f3eddd 100%);
+      overflow: hidden;
+    }
+
+    #classroom::before {
+      content: "課堂 / 過程 / 評估";
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      transform: translate(-50%, -50%);
+      color: rgba(47,62,52,.06);
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(70px, 13vw, 210px);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    #classroom .inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    #classroom .section-head {
+      grid-template-columns: minmax(0, .98fr) minmax(280px, .42fr);
+      align-items: end;
+      margin-bottom: clamp(48px, 9vh, 96px);
+    }
+
+    #classroom .section-head h2 {
+      font-size: clamp(48px, 6.1vw, 96px);
+      line-height: .94;
+      color: rgba(36,49,42,.94);
+    }
+
+    #classroom .section-head p {
+      color: rgba(36,49,42,.62);
+      font-size: clamp(15px, 1.16vw, 18px);
+      line-height: 1.75;
+      font-weight: 680;
+    }
+
+    #classroom .classroom-grid {
+      gap: clamp(20px, 4vw, 58px);
+      align-items: stretch;
+    }
+
+    #classroom .classroom-grid::before {
+      left: 6%;
+      right: 6%;
+      top: 72px;
+      background: linear-gradient(90deg, rgba(36,49,42,.08), rgba(36,49,42,.32), rgba(36,49,42,.08));
+    }
+
+    #classroom .class-card {
+      min-height: 380px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    #classroom .class-card::before {
+      content: "";
+      display: block;
+      width: 13px;
+      height: 13px;
+      margin-bottom: 44px;
+      border-radius: 999px;
+      background: var(--jade);
+      box-shadow: 0 0 0 12px rgba(47,141,122,.08);
+    }
+
+    #classroom .class-card small {
+      color: rgba(36,49,42,.5);
+      letter-spacing: .18em;
+    }
+
+    #classroom .class-card h3 {
+      max-width: 420px;
+      margin-top: 22px;
+      color: rgba(36,49,42,.94);
+      font-size: clamp(34px, 3.8vw, 68px);
+      line-height: .95;
+    }
+
+    #classroom .class-card p {
+      max-width: 360px;
+      margin-top: 24px;
+      color: rgba(36,49,42,.64);
+      font-size: 16px;
+      line-height: 1.68;
+      font-weight: 680;
+    }
+
+    .final {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 90px 24px;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .final::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5,4,3,.96), rgba(5,4,3,.42)),
+        url("website_assets/selected_v2/18-cinema-ending-dawn.webp") center / cover;
+      opacity: .95;
+    }
+
+    .final .inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .final h2 {
+      max-width: 980px;
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(48px, 7vw, 104px);
+      line-height: .98;
+    }
+
+    .final p {
+      max-width: 680px;
+      margin-top: 24px;
+      color: rgba(255,248,235,.72);
+      font-size: 20px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .trial-form {
+      display: flex;
+      align-items: center;
+      width: min(620px, 100%);
+      gap: 10px;
+      margin-top: 34px;
+      padding: 8px;
+      border: 1px solid rgba(255,248,235,.18);
+      border-radius: 999px;
+      background: rgba(255,248,235,.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .trial-form input {
+      flex: 1;
+      min-width: 0;
+      height: 48px;
+      border: 0;
+      outline: 0;
+      padding: 0 18px;
+      border-radius: 999px;
+      color: var(--ivory);
+      background: rgba(5,4,3,.42);
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .trial-form input::placeholder {
+      color: rgba(255,248,235,.46);
+    }
+
+    .trial-status {
+      min-height: 24px;
+      margin-top: 12px;
+      color: rgba(212,161,70,.9);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 1080px) {
+      .nav { grid-template-columns: 1fr auto; }
+      .nav-center, .nav-search { display: none; }
+      .section-head,
+      .problem-grid,
+      .gallery,
+      .evidence-board {
+        grid-template-columns: 1fr;
+      }
+      .module-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .simulation-layer-phase {
+        min-height: 940px;
+      }
+      .simulation-map {
+        inset: 34px 4%;
+      }
+      .simulation-city,
+      .simulation-source,
+      .simulation-decision,
+      .simulation-consequence {
+        width: 43%;
+      }
+      .simulation-city,
+      .simulation-decision {
+        left: 5%;
+      }
+      .simulation-source,
+      .simulation-consequence {
+        right: 5%;
+      }
+      .simulation-city,
+      .simulation-source {
+        top: 70px;
+      }
+      .simulation-decision,
+      .simulation-consequence {
+        bottom: 70px;
+      }
+      .flow-layout {
+        grid-template-columns: minmax(0, 1.2fr) minmax(260px, .58fr);
+      }
+      .system-stage {
+        min-height: 980px;
+      }
+      .system-map {
+        inset: 34px 4% 34px 4%;
+      }
+      .system-city,
+      .system-source,
+      .system-decision,
+      .system-consequence {
+        width: 43%;
+      }
+      .system-city,
+      .system-decision {
+        left: 5%;
+      }
+      .system-source,
+      .system-consequence {
+        right: 5%;
+      }
+      .system-city,
+      .system-source {
+        top: 70px;
+      }
+      .system-decision,
+      .system-consequence {
+        bottom: 70px;
+      }
+      .loop { min-height: auto; }
+      .loop-sticky { position: relative; }
+      .loop-layout {
+        grid-template-columns: 1fr;
+      }
+      .step-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .visual-stage { min-height: 560px; }
+      .bridge-flow,
+      .classroom-grid,
+      .readiness-strip {
+        grid-template-columns: 1fr;
+      }
+      .classroom-grid::before {
+        display: none;
+      }
+      #problem .section-head,
+      #classroom .section-head {
+        grid-template-columns: 1fr;
+      }
+      #problem .section-head {
+        margin-bottom: -6vh;
+      }
+      #bridge .section-head {
+        margin-bottom: 10px;
+      }
+      #classroom .class-card {
+        min-height: auto;
+      }
+      .writing-workbench {
+        grid-template-columns: 1fr;
+      }
+      .writing-cards {
+        min-height: auto;
+        display: grid;
+        gap: 12px;
+        padding: 14px;
+      }
+      .writing-card {
+        position: relative;
+        inset: auto !important;
+        width: 100%;
+        max-width: none;
+        grid-template-columns: 1fr;
+        min-height: auto;
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+      #bridge .writing-card,
+      #bridge .writing-card:nth-child(3) {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root { --wide: calc(100% - 28px); }
+      body::before { opacity: .35; }
+      .nav { height: 58px; padding: 0 14px; }
+      .brand { font-size: 13px; }
+      .edition-label { display: none; }
+      .pill-cta { min-height: 38px; padding: 0 12px; font-size: 12px; }
+      .opening { min-height: 145vh; }
+      .opening-stage { padding: 78px 14px 28px; }
+      .edition-frame { width: min(86vw, 420px); min-height: min(86vw, 420px); padding: 24px; }
+      .edition-title { font-size: 46px; }
+      [data-lang="en"] .edition-title { font-size: 37px; line-height: .94; }
+      .edition-copy { font-size: 15px; }
+      .opening-footer { display: none; }
+      .node::after { display: none; }
+      .section { padding: 78px 14px; }
+      .section-head { gap: 18px; margin-bottom: 28px; }
+      .section h2 { font-size: 42px; }
+      #modules,
+      #bridge {
+        min-height: auto;
+      }
+      .problem-map, .problem-card { min-height: auto; }
+      .problem-map { height: 360px; }
+      .problem-card { padding: 24px; }
+      .problem-card h3 { font-size: 30px; }
+      .section-title-lock .title-line {
+        white-space: normal;
+      }
+      .problem-cloud {
+        min-height: 780px;
+      }
+      .cloud-brand {
+        font-size: 24px;
+      }
+      .cloud-panel {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        width: auto;
+      }
+      .cloud-detail {
+        left: 16px;
+        right: 16px;
+        top: 86px;
+        width: auto;
+      }
+      .cloud-term {
+        min-width: auto;
+        max-width: 220px;
+        padding: 0;
+        font-size: clamp(15px, var(--size, 7vw), 34px);
+      }
+      #problem {
+        padding-top: 84px;
+      }
+      #problem .section-head {
+        margin-bottom: 20px;
+      }
+      #problem .section-head h2,
+      #bridge .section-head h2,
+      #classroom .section-head h2 {
+        font-size: clamp(42px, 13vw, 64px);
+        line-height: .92;
+      }
+      #problem .section-head p,
+      #bridge .section-head p,
+      #classroom .section-head p {
+        font-size: 15px;
+      }
+      #problem .problem-cloud {
+        min-height: 680px;
+      }
+      #problem .cloud-term[data-kind="core"] {
+        max-width: none;
+        font-size: clamp(54px, 15vw, 84px);
+      }
+      #bridge {
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+      #bridge::before {
+        font-size: 84px;
+        white-space: normal;
+        width: 90vw;
+        text-align: center;
+      }
+      #bridge .writing-cards {
+        padding: 0;
+      }
+      #classroom::before {
+        display: none;
+      }
+      #classroom .class-card::before {
+        margin-bottom: 24px;
+      }
+      .module-grid { grid-template-columns: 1fr; }
+      .module { min-height: 290px; }
+      .system-stage {
+        position: relative;
+        top: auto;
+        min-height: auto;
+        padding: 14px;
+      }
+      .system-map,
+      .system-layer {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 260px;
+        margin-bottom: 12px;
+        opacity: 1;
+        transform: none;
+      }
+      .system-map {
+        height: 320px;
+      }
+      .system-caption h3 { font-size: 24px; }
+      .step-rail { grid-template-columns: 1fr; }
+      .visual-browser {
+        position: relative;
+        top: auto;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        min-height: auto;
+      }
+      #visual-world {
+        min-height: auto;
+      }
+      #visual-world .inner {
+        min-height: auto;
+      }
+      .visual-scroll-steps {
+        display: none;
+      }
+      .visual-thumbs {
+        grid-template-columns: repeat(3, minmax(64px, 1fr));
+        order: 2;
+        gap: 8px;
+        align-content: stretch;
+      }
+      .visual-thumb {
+        aspect-ratio: 1;
+        opacity: .72;
+      }
+      .visual-thumb.active,
+      .visual-thumb:hover,
+      .visual-thumb:focus-visible {
+        transform: translateY(-4px);
+      }
+      .visual-stage {
+        min-height: 360px;
+        order: 1;
+      }
+      .visual-meta {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        order: 3;
+        width: 100%;
+        padding: 16px;
+      }
+      .visual-count {
+        font-size: 11px;
+      }
+      .visual-index {
+        position: static;
+        margin-top: 8px;
+        font-size: 70px;
+      }
+      .visual-meta small {
+        margin-top: 12px;
+      }
+      .visual-meta h3 {
+        font-size: 36px;
+      }
+      .visual-meta p {
+        max-width: none;
+        margin-top: 12px;
+        font-size: 15px;
+      }
+      .loop-copy { padding: 22px; }
+      .loop-copy h3 { font-size: 34px; }
+      .simulation-scroll-stage {
+        position: relative;
+        top: auto;
+        min-height: auto;
+        padding: 0;
+        background-size: 50% 100%, auto, auto;
+      }
+      .simulation-layer-phase,
+      .simulation-flow-phase {
+        grid-area: auto;
+        width: 100%;
+        opacity: 1;
+        transform: none;
+        filter: none;
+        pointer-events: auto;
+      }
+      .simulation-layer-phase {
+        min-height: auto;
+        padding: 14px;
+        margin-bottom: 18px;
+      }
+      .simulation-map,
+      .simulation-layer {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 260px;
+        margin-bottom: 12px;
+        opacity: 1;
+        transform: none;
+      }
+      .simulation-map {
+        height: 320px;
+      }
+      .simulation-caption h3 { font-size: 24px; }
+      .flow-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-layout { grid-template-columns: 1fr; }
+      .flow-visual { min-height: 360px; }
+      .flow-copy {
+        min-height: auto;
+        padding: 22px;
+      }
+      .flow-copy h3 { font-size: 34px; }
+      .evidence-fragments {
+        min-height: auto;
+        display: grid;
+        gap: 10px;
+        padding: 12px;
+      }
+      .source-fragment {
+        position: relative;
+        inset: auto !important;
+        width: 100%;
+        min-height: auto;
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+      .writing-logic {
+        grid-template-columns: 1fr;
+        padding: 14px;
+      }
+      .writing-logic::before {
+        display: none;
+      }
+      .logic-step {
+        grid-template-columns: 44px 1fr;
+        border-left: 0;
+        border-top: 1px solid rgba(77,50,22,.12);
+        opacity: 1;
+        transform: none;
+      }
+      .writing-workbench {
+        grid-template-columns: 1fr;
+      }
+      .writing-cards {
+        min-height: auto;
+        display: grid;
+        gap: 10px;
+        padding: 12px;
+      }
+      .writing-card {
+        position: relative;
+        inset: auto !important;
+        width: 100%;
+        grid-template-columns: 1fr;
+        min-height: auto;
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+      .writing-card img,
+      .writing-card video {
+        height: 180px;
+      }
+      .gallery-main, .gallery-stack figure { min-height: 360px; }
+      .final { padding: 78px 14px; }
+      .cta-row { display: grid; }
+      .trial-form {
+        display: grid;
+        border-radius: 22px;
+      }
+      .trial-form .btn {
+        width: 100%;
+      }
+      .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body data-lang="zh">
+  <nav class="nav" aria-label="主要導覽">
+    <a class="brand" href="#top"><span class="brand-mark"></span><span>自強三十年</span><span class="edition-label">The Self-Strengthening Edition</span></a>
+    <div class="nav-center">
+      <a href="#problem"><span data-zh>為何需要</span><span data-en>Need</span></a>
+      <a href="#modules"><span data-zh>模擬系統</span><span data-en>System</span></a>
+      <a href="#modules"><span data-zh>學生流程</span><span data-en>Flow</span></a>
+      <a href="#bridge"><span data-zh>證據書寫</span><span data-en>Writing</span></a>
+      <a href="#classroom"><span data-zh>課堂研究</span><span data-en>Research</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" aria-label="Language">
+        <button type="button" data-set-lang="zh">中</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="opening" data-section="top">
+      <div class="opening-stage">
+        <div class="geometry" aria-hidden="true"></div>
+        <div class="route-lines" aria-hidden="true">
+          <svg viewBox="0 0 1440 1000" preserveAspectRatio="none">
+            <line x1="0" y1="470" x2="1440" y2="470"></line>
+            <line x1="340" y1="0" x2="340" y2="1000"></line>
+            <line x1="720" y1="0" x2="720" y2="1000"></line>
+            <line x1="1100" y1="0" x2="1100" y2="1000"></line>
+            <path d="M240 690 C410 540 550 470 720 475 C890 480 1020 420 1210 280"></path>
+            <path d="M200 320 C380 410 520 520 695 520 C850 520 1000 620 1240 760"></path>
+            <rect x="550" y="310" width="340" height="360"></rect>
+          </svg>
+        </div>
+        <span class="node n1" data-label="外灘碼頭"></span>
+        <span class="node n2" data-label="洋行門前"></span>
+        <span class="node n3" data-label="輪船招商局"></span>
+        <span class="node n4" data-label="江南製造局"></span>
+
+        <div class="edition-frame">
+          <div>
+            <div class="edition-kicker"><span data-zh>歷史模擬遊戲</span><span data-en>Historical Simulation Game</span></div>
+            <h1 class="edition-title"><span data-zh>自強三十年</span><span data-en>The Self-Strengthening Edition</span></h1>
+            <p class="edition-copy">
+              <span data-zh><span class="copy-line">在城市、史料與抉擇之間，理解「改革片面」如何形成。</span><span class="copy-line">你不是旁觀歷史，而是在限制中作出判斷。</span></span>
+              <span data-en><span class="copy-line">Move through places, evidence, and choices to see how partial reform was formed.</span><span class="copy-line">You are not observing history; you judge within constraints.</span></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="opening-footer">
+          <span data-zh>向下展開改革路線</span><span data-en>scroll to unfold the reform route</span>
+          <span data-zh>親歷歷史事件，與人物對話</span><span data-en>encounter events and speak with historical actors</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section editorial-word-field" id="problem" data-section="problem">
+      <div class="inner">
+        <div class="section-head">
+          <div>
+            <div class="label"><span data-zh>為何需要這個遊戲</span><span data-en>why the simulation is needed</span></div>
+            <h2 class="section-title-lock"><span data-zh><span class="title-line">讓歷史複雜性</span><span class="title-line">變成可經歷的過程</span></span><span data-en>Make historical complexity experiential</span></h2>
+          </div>
+          <p><span data-zh>學生不是缺少史實或答案，而是缺少一個能看見多重因素<br>如何互相牽動的學習場景。模擬遊戲把制度、人物、資源、<br>社會態度與後果放進同一個可探索的過程。</span><span data-en>Students need a learning situation where historical factors can be encountered as connected conditions.</span></p>
+        </div>
+
+        <div class="problem-cloud" data-active-cloud="0" data-cloud-layer="student">
+          <div class="cloud-toggle" role="group" aria-label="切換詞場層面">
+            <button class="active" type="button" data-cloud-layer-toggle="student" aria-pressed="true">學生層面</button>
+            <button type="button" data-cloud-layer-toggle="teacher" aria-pressed="false">老師層面</button>
+          </div>
+          <div class="cloud-brand" aria-hidden="true"><span>歷史</span><span>複雜性</span></div>
+          <div class="cloud-map" aria-label="學生學習困難與歷史複雜性詞網">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line x1="50" y1="50" x2="20" y2="32"></line>
+              <line x1="50" y1="50" x2="32" y2="62"></line>
+              <line x1="50" y1="50" x2="66" y2="30"></line>
+              <line x1="50" y1="50" x2="76" y2="62"></line>
+              <line x1="28" y1="74" x2="50" y2="50"></line>
+              <line x1="74" y1="78" x2="50" y2="50"></line>
+              <line x1="18" y1="48" x2="82" y2="44"></line>
+              <line x1="38" y1="22" x2="62" y2="84"></line>
+            </svg>
+            <button class="cloud-term active" type="button" data-cloud-index="0" data-cloud-layer="student" data-kind="student" style="--x:48%;--y:48%;--size:3.1vw;--tone:.72;--scale:1.08;--depth:.04;--w:260px;--term-opacity:.8;--blur:.25px">背誦答案</button>
+            <button class="cloud-term" type="button" data-cloud-index="1" data-cloud-layer="student" data-kind="student" style="--x:29%;--y:36%;--size:2.05vw;--tone:.56;--scale:1;--depth:.2;--w:210px;--term-opacity:.52;--blur:1.1px">資料抄錄</button>
+            <button class="cloud-term" type="button" data-cloud-index="2" data-cloud-layer="student" data-kind="student" style="--x:68%;--y:34%;--size:2.1vw;--tone:.56;--scale:1.02;--depth:.18;--w:210px;--term-opacity:.54;--blur:1px">證據薄弱</button>
+            <button class="cloud-term" type="button" data-cloud-index="3" data-cloud-layer="student" data-kind="student" style="--x:72%;--y:62%;--size:2.35vw;--tone:.6;--scale:1.04;--depth:.16;--w:210px;--term-opacity:.58;--blur:.8px">扣題不足</button>
+            <button class="cloud-term" type="button" data-cloud-index="4" data-cloud-layer="student" data-kind="student" style="--x:37%;--y:68%;--size:2.4vw;--tone:.62;--scale:1.04;--depth:.18;--w:210px;--term-opacity:.6;--blur:.7px">論證不足</button>
+            <button class="cloud-term" type="button" data-cloud-index="5" data-cloud-layer="student" data-kind="student" style="--x:20%;--y:56%;--size:1.58vw;--tone:.42;--scale:.92;--depth:.36;--w:180px;--term-opacity:.34;--blur:2.3px">未能代入</button>
+            <button class="cloud-term" type="button" data-cloud-index="6" data-cloud-layer="student" data-kind="student" style="--x:58%;--y:78%;--size:1.5vw;--tone:.4;--scale:.9;--depth:.34;--w:180px;--term-opacity:.34;--blur:2.4px">欠缺記憶</button>
+            <button class="cloud-term" type="button" data-cloud-index="7" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:48%;--y:48%;--size:3.05vw;--tone:.72;--scale:1.08;--depth:.04;--w:260px;--term-opacity:.8;--blur:.25px">扣連課程</button>
+            <button class="cloud-term" type="button" data-cloud-index="8" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:27%;--y:36%;--size:1.92vw;--tone:.52;--scale:.98;--depth:.22;--w:230px;--term-opacity:.48;--blur:1.3px">善用人工智能</button>
+            <button class="cloud-term" type="button" data-cloud-index="9" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:69%;--y:34%;--size:2vw;--tone:.56;--scale:1;--depth:.18;--w:210px;--term-opacity:.52;--blur:1.1px">鷹架教學</button>
+            <button class="cloud-term" type="button" data-cloud-index="10" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:72%;--y:62%;--size:2.24vw;--tone:.58;--scale:1.04;--depth:.16;--w:210px;--term-opacity:.56;--blur:.9px">探究學習</button>
+            <button class="cloud-term" type="button" data-cloud-index="11" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:36%;--y:68%;--size:2.28vw;--tone:.6;--scale:1.04;--depth:.18;--w:210px;--term-opacity:.58;--blur:.8px">遊戲學習</button>
+            <button class="cloud-term" type="button" data-cloud-index="12" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:20%;--y:56%;--size:1.64vw;--tone:.42;--scale:.92;--depth:.36;--w:180px;--term-opacity:.34;--blur:2.2px">歷史共情</button>
+            <button class="cloud-term" type="button" data-cloud-index="13" data-cloud-layer="teacher" data-kind="teacher" hidden style="--x:60%;--y:79%;--size:1.52vw;--tone:.4;--scale:.9;--depth:.34;--w:180px;--term-opacity:.34;--blur:2.4px">價值教育</button>
+          </div>
+          <aside class="cloud-detail" aria-live="polite">
+            <small id="cloud-label">學生層面</small>
+            <h3 id="cloud-title">背誦答案</h3>
+            <p id="cloud-copy">學生可以記住結論，卻未必理解原因如何在具體歷史處境中互相牽動。</p>
+          </aside>
+          <div class="cloud-panel" aria-hidden="true">
+            <small>研究工具聚焦</small>
+            <h3>從困難詞語進入設計需要</h3>
+            <p>點擊詞語，查看遊戲要回應的學習困難與歷史因素。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="modules" data-section="modules">
+      <div class="inner simulation-intro">
+        <div class="section-head">
+          <div>
+            <div class="label">模擬系統</div>
+            <h2>逐層展開改革世界</h2>
+          </div>
+          <p>進入大清地圖，城市、史料、人物抉擇與後果逐一浮現。</p>
+        </div>
+      </div>
+
+      <div class="simulation-scroll-stage" data-simulation-phase="layer" data-layer-step="0" data-flow-step="0">
+        <div class="simulation-layer-phase" aria-label="模擬系統逐層展開">
+          <figure class="simulation-map">
+            <img src="website_assets/game_screens_v7/01-game-map-full.png" alt="改革路線地圖" loading="lazy" decoding="async">
+            <figcaption class="simulation-caption">
+              <small>地圖</small>
+              <h3>地圖與路線</h3>
+              <p>改革先被放回多城市、多壓力的歷史網絡。</p>
+            </figcaption>
+          </figure>
+
+          <article class="simulation-layer simulation-city">
+            <img src="website_assets/game_screens_v7/09-city-hongkong-clean.webp" alt="香港城市現場" loading="lazy" decoding="async">
+            <div class="simulation-caption">
+              <small>城市</small>
+              <h3>城市現場</h3>
+              <p>城市不是背景，而是人物、制度與壓力交會的場域。</p>
+            </div>
+          </article>
+
+          <article class="simulation-layer simulation-source">
+            <img src="website_assets/game_screens_v7/03-source-reading-yanghang.png" alt="洋行門前史料判讀" loading="lazy" decoding="async">
+            <div class="simulation-caption">
+              <small>史料</small>
+              <h3>史料先行</h3>
+              <p>學生先接觸圖像與文字線索，再作判斷。</p>
+            </div>
+          </article>
+
+          <article class="simulation-layer simulation-decision">
+            <img src="website_assets/game_screens_v7/04-actor-encounter-heqi.png" alt="何啟人物抉擇" loading="lazy" decoding="async">
+            <div class="simulation-caption">
+              <small>人物決策</small>
+              <h3>人物與抉擇</h3>
+              <p>人物立場、時代限制與可行選項共同塑造行動。</p>
+            </div>
+          </article>
+
+          <article class="simulation-layer simulation-consequence">
+            <img src="website_assets/game_screens_v7/07-ending-evaluation-review.png" alt="洋務成敗評價" loading="lazy" decoding="async">
+            <div class="simulation-caption">
+              <small>後果</small>
+              <h3>後果與評價</h3>
+              <p>結局把遊戲經歷帶回「為何失敗」的歷史論證。</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="simulation-flow-phase" aria-label="遊戲流程 01 至 06">
+          <div class="flow-tabs">
+            <button class="flow-tab active" data-flow-step="0"><span>01</span><b>接受歷史問題</b></button>
+            <button class="flow-tab" data-flow-step="1"><span>02</span><b>探索城市線索</b></button>
+            <button class="flow-tab" data-flow-step="2"><span>03</span><b>標記可用證據</b></button>
+            <button class="flow-tab" data-flow-step="3"><span>04</span><b>理解人物立場</b></button>
+            <button class="flow-tab" data-flow-step="4"><span>05</span><b>整理因果關係</b></button>
+            <button class="flow-tab" data-flow-step="5"><span>06</span><b>形成評價答案</b></button>
+          </div>
+
+          <div class="flow-layout">
+            <div class="flow-visual">
+              <div class="flow-slide active"><video data-src="website_assets/flow_videos/flow-02-city-clues.mov" muted loop playsinline preload="none" aria-label="接受歷史問題片段"></video></div>
+              <div class="flow-slide"><video data-src="website_assets/flow_videos/flow-03-evidence-marking.mov" muted loop playsinline preload="none" aria-label="城市線索探索片段"></video></div>
+              <div class="flow-slide"><video data-src="website_assets/flow_videos/flow-03-source-writing.mov" muted loop playsinline preload="none" aria-label="標記可用證據片段"></video></div>
+              <div class="flow-slide"><video data-src="website_assets/flow_videos/flow-04-actor-position.mov" muted loop playsinline preload="none" aria-label="人物立場互動片段"></video></div>
+              <div class="flow-slide"><video data-src="website_assets/flow_videos/flow-05-causal-organising.mov" muted loop playsinline preload="none" aria-label="整理因果關係片段"></video></div>
+              <div class="flow-slide"><img src="website_assets/game_screens_v7/07-ending-evaluation-review.png" alt="成敗評價回顧" loading="lazy" decoding="async"></div>
+            </div>
+
+            <article class="flow-copy">
+              <small id="step-label">01 / 接受歷史問題</small>
+              <h3 id="step-title">接受歷史問題</h3>
+              <p id="step-copy">你先面對「洋務運動為何失敗」這個需要追查的問題。</p>
+              <div class="purpose-tags" id="step-tags">
+                <span>問題意識</span>
+                <span>探究起點</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section editorial-constellation" id="bridge" data-section="bridge">
+      <div class="inner">
+        <div class="section-head">
+          <div>
+            <div class="label">由經歷走向論證</div>
+            <h2>從威海衛紅點，走到一段歷史論證</h2>
+          </div>
+          <p>同一件歷史事件貫穿六步：從地圖紅點進入威海衛，觀察海防現場、讀取史料、辨認限制、連接後果，最後回到洋務運動成敗的論證。</p>
+        </div>
+
+        <div class="writing-workbench pointer-evidence-stage" data-active-evidence="2" data-active-writing="2">
+          <div class="writing-cards" role="group" aria-label="威海衛案例轉化為歷史論證">
+            <article class="writing-card evidence-text" role="button" aria-pressed="false" data-evidence-index="0" data-writing-index="0" tabindex="0">
+              <div>
+                <small>01 / 進入威海衛</small>
+                <blockquote>地圖紅點把問題帶到具體地點。</blockquote>
+                <b>從紅點進入問題</b>
+                <p>學生從地圖上的威海衛紅點進入，不再只面對抽象結論，而是進入北洋海防的具體現場。</p>
+              </div>
+            </article>
+
+            <article class="writing-card" role="button" aria-pressed="false" data-evidence-index="1" data-writing-index="1" tabindex="0">
+              <img src="website_assets/selected_v2/05-event-beiyang-fleet.webp" alt="北洋水師" loading="lazy" decoding="async">
+              <div>
+                <small>02 / 觀察海防現場</small>
+                <b>看見軍港、防線與艦隊</b>
+                <p>港口、防線、炮台與北洋艦隊成為可觀察線索，學生先描述自己在場景中看見甚麼。</p>
+              </div>
+            </article>
+
+            <article class="writing-card active" role="button" aria-pressed="true" data-evidence-index="2" data-writing-index="2" tabindex="0">
+              <img src="website_assets/selected_v2/07-event-yellow-sea-battle.webp" alt="甲午戰爭" loading="lazy" decoding="async">
+              <div>
+                <small>03 / 讀取相關史料</small>
+                <b>把威海衛資料變成證據</b>
+                <p>史料用來追問海防設施、艦隊狀況與戰事結果，不是直接抄寫答案。</p>
+              </div>
+            </article>
+
+            <article class="writing-card" role="button" aria-pressed="false" data-evidence-index="3" data-writing-index="3" tabindex="0">
+              <img src="website_assets/selected_v2/14-hotspot-railway.webp" alt="鐵路與地方阻力" loading="lazy" decoding="async">
+              <div>
+                <small>04 / 辨認改革限制</small>
+                <b>由線索找出限制</b>
+                <p>學生把觀察與史料連到補給、訓練、指揮、財政與制度限制。</p>
+              </div>
+            </article>
+
+            <article class="writing-card" role="button" aria-pressed="false" data-evidence-index="4" data-writing-index="4" tabindex="0">
+              <img src="website_assets/selected_v2/16-cutscene-lihongzhang.webp" alt="李鴻章與人物限制" loading="lazy" decoding="async">
+              <div>
+                <small>05 / 連接戰敗後果</small>
+                <b>威海衛失守不是孤立結果</b>
+                <p>威海衛失守與北洋艦隊覆沒，成為檢驗洋務改革能否轉化為軍事能力的後果。</p>
+              </div>
+            </article>
+
+            <article class="writing-card" role="button" aria-pressed="false" data-evidence-index="5" data-writing-index="5" tabindex="0">
+              <img src="website_assets/selected_v2/20-city-japan.webp" alt="日本東京" loading="lazy" decoding="async">
+              <div>
+                <small>06 / 形成歷史論證</small>
+                <b>回到洋務成敗判斷</b>
+                <p>論證不只說技術不足，而是指出技術、制度、資源與國家動員未能互相支撐。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="visual-world" data-section="visual-world">
+      <div class="inner">
+        <div class="section-head">
+          <div>
+            <div class="label">視覺世界</div>
+            <h2>城市、史料與結局構成一條歷史路線</h2>
+          </div>
+          <p>沉浸感不是裝飾。視覺世界讓學生把技術、制度、人物與戰爭後果放在同一個歷史空間中理解。</p>
+        </div>
+
+        <div class="visual-scroll-steps" aria-hidden="true">
+          <div class="visual-scroll-step" data-visual-step="0"></div>
+          <div class="visual-scroll-step" data-visual-step="1"></div>
+          <div class="visual-scroll-step" data-visual-step="2"></div>
+          <div class="visual-scroll-step" data-visual-step="3"></div>
+          <div class="visual-scroll-step" data-visual-step="4"></div>
+          <div class="visual-scroll-step" data-visual-step="5"></div>
+        </div>
+
+        <div class="visual-browser" data-active-visual="0" tabindex="0">
+          <div class="visual-thumbs" aria-label="視覺世界縮圖">
+            <button class="visual-thumb active" type="button" data-visual-index="0" data-step-label="01" aria-label="上海商業網絡">
+              <img src="website_assets/selected_v2/03-city-shanghai-network.webp" alt="" loading="lazy" decoding="async">
+            </button>
+            <button class="visual-thumb" type="button" data-visual-index="1" data-step-label="02" aria-label="福州船政空間">
+              <img src="website_assets/selected_v2/04-city-fuzhou-shipyard-context.webp" alt="" loading="lazy" decoding="async">
+            </button>
+            <button class="visual-thumb" type="button" data-visual-index="2" data-step-label="03" aria-label="威海衛北洋艦隊">
+              <img src="website_assets/selected_v2/19-city-weihaiwei.webp" alt="" loading="lazy" decoding="async">
+            </button>
+            <button class="visual-thumb" type="button" data-visual-index="3" data-step-label="04" aria-label="日本東京中日比較">
+              <img src="website_assets/selected_v2/20-city-japan.webp" alt="" loading="lazy" decoding="async">
+            </button>
+            <button class="visual-thumb" type="button" data-visual-index="4" data-step-label="05" aria-label="黃海海戰">
+              <img src="website_assets/selected_v2/07-event-yellow-sea-battle.webp" alt="" loading="lazy" decoding="async">
+            </button>
+            <button class="visual-thumb" type="button" data-visual-index="5" data-step-label="06" aria-label="甲午戰敗">
+              <img src="website_assets/selected_v2/17-cinema-ending-question.webp" alt="" loading="lazy" decoding="async">
+            </button>
+          </div>
+
+          <figure class="visual-stage">
+            <img class="visual-main-image" src="website_assets/selected_v2/03-city-shanghai-network.webp" alt="上海商業網絡" loading="lazy" decoding="async">
+            <aside class="visual-meta" aria-live="polite">
+              <div class="visual-count">01 / 06</div>
+              <div class="visual-index" id="visual-index">01</div>
+              <small id="visual-scene">上海</small>
+              <h3 id="visual-theme">商業網絡</h3>
+              <p id="visual-function">從城市看見通商、商辦與制度交會。</p>
+            </aside>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft editorial-assessment-path" id="classroom" data-section="classroom">
+      <div class="inner">
+        <div class="section-head">
+          <div>
+            <div class="label">課堂與研究層</div>
+            <h2>讓學習過程可以被設計、觀察與回到評估</h2>
+          </div>
+          <p>模擬遊戲把學生的探索、史料接觸、人物抉擇與反思節點留下來，讓教師能設計討論，研究者能觀察過程，再配合工作紙、後測、遷移任務和評分規準判斷學習成效。</p>
+        </div>
+
+        <div class="classroom-grid">
+          <article class="class-card">
+            <small>01 / 課堂任務</small>
+            <h3>把遊戲接回共同問題</h3>
+            <p>教師以同一歷史問題、工作紙和討論任務，把遊戲經歷接回課堂。</p>
+          </article>
+          <article class="class-card">
+            <small>02 / 遊戲過程</small>
+            <h3>留下探索與抉擇線索</h3>
+            <p>系統呈現學生如何探索城市、接觸史料、作出抉擇和回應 checkpoint。</p>
+          </article>
+          <article class="class-card">
+            <small>03 / 評估證據</small>
+            <h3>用書寫與評分判斷成效</h3>
+            <p>學習成效不直接由點擊紀錄判斷，而要配合後測、遷移任務、書寫表現和評分規準。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" id="start" data-section="start">
+      <div class="inner">
+        <div class="label"><span data-zh>進入模擬</span><span data-en>enter the simulation</span></div>
+        <h2><span data-zh>親自走進改革現場，判斷失敗如何形成。</span><span data-en>Enter the reform sites and judge how failure was formed.</span></h2>
+        <p><span data-zh>留下電郵，申請試玩《自強三十年》，讓城市、史料、人物抉擇與後果成為可討論的歷史經驗。</span><span data-en>Leave your email to request a trial of the simulation.</span></p>
+        <form class="trial-form" id="trial-form">
+          <input id="trial-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="輸入電郵地址" aria-label="電郵地址" required>
+          <button class="btn gold" type="submit"><span data-zh>申請試玩</span><span data-en>Request trial</span></button>
+        </form>
+        <div class="trial-status" id="trial-status" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const opening = document.querySelector('.opening');
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const trialForm = document.querySelector('#trial-form');
+    const trialEmail = document.querySelector('#trial-email');
+    const trialStatus = document.querySelector('#trial-status');
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function revealSegment(progress, start, end) {
+      return clamp((progress - start) / (end - start), 0, 1);
+    }
+
+    function sectionProgress(section) {
+      if (!section) return 0;
+      const rect = section.getBoundingClientRect();
+      const travel = Math.max(1, rect.height - window.innerHeight);
+      return clamp(-rect.top / travel, 0, 1);
+    }
+
+    function setIntroProperties(progress) {
+      root.style.setProperty('--intro', progress.toFixed(3));
+      root.style.setProperty('--intro-frame', revealSegment(progress, .18, .52).toFixed(3));
+      root.style.setProperty('--intro-kicker', revealSegment(progress, .14, .34).toFixed(3));
+      root.style.setProperty('--intro-copy', revealSegment(progress, .30, .62).toFixed(3));
+      root.style.setProperty('--intro-copy-one', revealSegment(progress, .36, .64).toFixed(3));
+      root.style.setProperty('--intro-copy-two', revealSegment(progress, .50, .78).toFixed(3));
+      root.style.setProperty('--intro-footer', revealSegment(progress, .58, .86).toFixed(3));
+    }
+
+    function updateIntro() {
+      if (!opening || reduceMotion) {
+        setIntroProperties(1);
+        return;
+      }
+      const rect = opening.getBoundingClientRect();
+      const travel = Math.max(1, rect.height - window.innerHeight);
+      const progress = clamp(-rect.top / travel, 0, 1);
+      setIntroProperties(progress);
+    }
+
+    let currentLang = document.body.dataset.lang || 'zh';
+    const langButtons = Array.from(document.querySelectorAll('[data-set-lang]'));
+
+    const stepData = [
+      {
+        label: '01 / 接受歷史問題',
+        title: '接受歷史問題',
+        copy: '你先面對「洋務運動為何失敗」這個需要追查的問題。',
+        tags: ['問題意識', '探究起點']
+      },
+      {
+        label: '02 / 探索城市線索',
+        title: '探索城市線索',
+        copy: '你在城市場景中尋找制度、商業、人物與社會壓力的痕跡。',
+        tags: ['場景觀察', '線索搜尋']
+      },
+      {
+        label: '03 / 標記可用證據',
+        title: '標記可用證據',
+        copy: '你判斷哪些圖像或文字線索能支持歷史解釋。',
+        tags: ['證據選取', '可用性判斷']
+      },
+      {
+        label: '04 / 理解人物立場',
+        title: '理解人物立場',
+        copy: '你不只選擇對錯，而是理解人物在時代限制下如何作出抉擇。',
+        tags: ['人物處境', '限制中的選擇']
+      },
+      {
+        label: '05 / 整理因果關係',
+        title: '整理因果關係',
+        copy: '你把技術、財政、制度、社會阻力與戰爭檢驗連成解釋路徑。',
+        tags: ['因果連接', '主次判斷']
+      },
+      {
+        label: '06 / 形成評價答案',
+        title: '形成評價答案',
+        copy: '你把遊戲經歷轉化成一段有證據、有因果、有評價的答案。',
+        tags: ['論證成形', '評價答案']
+      }
+    ];
+
+    const cloudData = [
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '背誦答案',
+        copy: '學生可以記住結論，卻未必理解原因如何在具體歷史處境中互相牽動。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '資料抄錄',
+        copy: '學生能找到資料，卻容易停留在搬字過紙，未能說明資料如何支持判斷。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '證據薄弱',
+        copy: '答案若缺少具體證據，歷史判斷便容易變成一般印象或空泛評論。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '扣題不足',
+        copy: '學生有時能描述背景，卻未必能回到題目要求的比較、解釋和評價。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '論證不足',
+        copy: '學生需要把觀察、史料和因果關係組織起來，而不只是列出原因。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '未能代入',
+        copy: '若未能進入人物和時代限制，學生容易用今日角度簡化歷史抉擇。'
+      },
+      {
+        layer: 'student',
+        label: '學生層面',
+        title: '欠缺記憶',
+        copy: '記憶不是死背，而是需要透過場景、人物與事件關係建立可提取的歷史理解。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '扣連課程',
+        copy: '遊戲任務需要回到課程問題、史料運用和評估要求，而不是成為額外活動。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '善用人工智能',
+        copy: '人工智能可協助生成情境、提示和回饋，但仍要由教師設計問題與判斷準則。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '鷹架教學',
+        copy: '遊戲過程要配合提示、工作紙和討論問題，幫助學生逐步由經歷走向論證。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '探究學習',
+        copy: '學生不是接收答案，而是在城市、史料、人物抉擇與後果中追查歷史問題。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '遊戲學習',
+        copy: '遊戲不是獎勵包裝，而是用互動過程讓學生看見歷史條件如何限制選擇。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '歷史共情',
+        copy: '透過人物處境和時代限制，學生能理解歷史行動者的選擇並非簡單對錯。'
+      },
+      {
+        layer: 'teacher',
+        label: '老師層面',
+        title: '價值教育',
+        copy: '學生在改革成敗中討論責任、選擇和社會變遷，連接歷史理解與價值判斷。'
+      }
+    ];
+
+    const writingDraftData = [
+      {
+        label: '立場',
+        title: '先回應題目',
+        copy: '我部分同意洋務運動失敗與只學西方技術有關，但問題不只是技術不足。',
+        role: '立場'
+      },
+      {
+        label: '證據',
+        title: '技術成果需要支撐',
+        copy: '新式艦隊一度建立，但經費、維修、訓練和制度支援不足，令技術優勢難以持續。',
+        role: '證據'
+      },
+      {
+        label: '解釋',
+        title: '戰爭暴露限制',
+        copy: '甲午戰爭反映改革成果需要被制度、指揮、彈藥和國家支援共同檢驗。',
+        role: '解釋'
+      },
+      {
+        label: '解釋',
+        title: '技術也需要社會條件',
+        copy: '新式技術若缺乏社會理解和支持，便難以順利推行。',
+        role: '解釋'
+      },
+      {
+        label: '處境',
+        title: '人物不是自由行動',
+        copy: '洋務人物的選擇亦受朝廷政治、經費和既有官僚制度限制。',
+        role: '處境'
+      },
+      {
+        label: '回扣',
+        title: '回到多因判斷',
+        copy: '中日比較顯示，改革成敗取決於多項因素如何互相影響。',
+        role: '回扣'
+      }
+    ];
+
+    const visualWorldItems = [
+      {
+        src: 'website_assets/selected_v2/03-city-shanghai-network.webp',
+        alt: '上海商業網絡',
+        scene: '上海',
+        theme: '商業網絡',
+        function: '從城市看見通商、商辦與制度交會。'
+      },
+      {
+        src: 'website_assets/selected_v2/04-city-fuzhou-shipyard-context.webp',
+        alt: '福州船政空間',
+        scene: '福州',
+        theme: '船政空間',
+        function: '從造船、學堂與翻譯看見如何達到強兵。'
+      },
+      {
+        src: 'website_assets/selected_v2/19-city-weihaiwei.webp',
+        alt: '威海衛北洋艦隊',
+        scene: '威海衛',
+        theme: '北洋艦隊',
+        function: '從威海衛看海防設施與改革局限。'
+      },
+      {
+        src: 'website_assets/selected_v2/20-city-japan.webp',
+        alt: '日本東京中日比較',
+        scene: '日本東京',
+        theme: '中日比較',
+        function: '從日本東京看明治維新，對照洋務改革的片面性。'
+      },
+      {
+        src: 'website_assets/selected_v2/07-event-yellow-sea-battle.webp',
+        alt: '黃海海戰',
+        scene: '黃海',
+        theme: '黃海海戰',
+        function: '海戰把長期累積的制度、財政與訓練問題集中暴露。'
+      },
+      {
+        src: 'website_assets/selected_v2/17-cinema-ending-question.webp',
+        alt: '甲午戰敗',
+        scene: '結局',
+        theme: '甲午戰敗',
+        function: '玩家回到問題本身：為何甲午戰敗象徵運動失敗告終？'
+      }
+    ];
+
+    const stepButtons = Array.from(document.querySelectorAll('.flow-tab'));
+    const slides = Array.from(document.querySelectorAll('.flow-slide'));
+    const stepLabel = document.querySelector('#step-label');
+    const stepTitle = document.querySelector('#step-title');
+    const stepCopy = document.querySelector('#step-copy');
+    const stepTags = document.querySelector('#step-tags');
+    const modulesSection = document.querySelector('#modules');
+    const simulationStage = document.querySelector('.simulation-scroll-stage');
+    const problemSection = document.querySelector('#problem');
+    const cloudStage = document.querySelector('.problem-cloud');
+    const cloudTerms = Array.from(cloudStage?.querySelectorAll('.cloud-term[data-cloud-index]') || []);
+    const cloudLayerButtons = Array.from(document.querySelectorAll('[data-cloud-layer-toggle]'));
+    const cloudLabel = document.querySelector('#cloud-label');
+    const cloudTitle = document.querySelector('#cloud-title');
+    const cloudCopy = document.querySelector('#cloud-copy');
+    const evidenceStage = document.querySelector('.pointer-evidence-stage');
+    const sourceFragments = Array.from(evidenceStage?.querySelectorAll('[data-evidence-index]') || []);
+    const logicSteps = Array.from(evidenceStage?.querySelectorAll('[data-writing-index]') || []);
+    const evidenceControls = Array.from(new Set([...sourceFragments, ...logicSteps]));
+    const writingDraftLabel = document.querySelector('#writing-draft-label');
+    const writingDraftTitle = document.querySelector('#writing-draft-title');
+    const writingDraftCopy = document.querySelector('#writing-draft-copy');
+    const writingDraftRole = document.querySelector('#writing-draft-role');
+    const visualWorld = document.querySelector('#visual-world');
+    const visualBrowser = visualWorld?.querySelector('.visual-browser');
+    const visualThumbs = Array.from(visualBrowser?.querySelectorAll('.visual-thumb[data-visual-index]') || []);
+    const visualSteps = Array.from(visualWorld?.querySelectorAll('.visual-scroll-step[data-visual-step]') || []);
+    const visualMainImage = visualBrowser?.querySelector('.visual-main-image');
+    const visualCount = visualBrowser?.querySelector('.visual-count');
+    const visualIndex = visualBrowser?.querySelector('#visual-index');
+    const visualScene = visualBrowser?.querySelector('#visual-scene');
+    const visualTheme = visualBrowser?.querySelector('#visual-theme');
+    const visualFunction = visualBrowser?.querySelector('#visual-function');
+
+    function localize(value) {
+      if (typeof value === 'string') return value;
+      return value[currentLang] || value.zh || value.en || '';
+    }
+
+    let currentStepIndex = -1;
+    let currentVisualIndex = -1;
+    let currentCloudLayer = 'student';
+
+    function setStep(index, options = {}) {
+      const safeIndex = clamp(index, 0, stepData.length - 1);
+      if (!options.force && currentStepIndex === safeIndex) return;
+      currentStepIndex = safeIndex;
+      stepButtons.forEach((button, i) => button.classList.toggle('active', i === safeIndex));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === safeIndex));
+      slides.forEach((slide, i) => {
+        const video = slide.querySelector('video');
+        if (!video) return;
+        if (i === safeIndex) {
+          if (!video.getAttribute('src') && video.dataset.src) {
+            video.src = video.dataset.src;
+            video.load();
+          }
+          video.preload = 'metadata';
+          const playAttempt = video.play();
+          if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
+        } else {
+          video.pause();
+          if (video.getAttribute('src')) {
+            video.removeAttribute('src');
+            video.load();
+          }
+          video.preload = 'none';
+        }
+      });
+      const data = stepData[safeIndex];
+      stepLabel.textContent = localize(data.label);
+      stepTitle.textContent = localize(data.title);
+      stepCopy.textContent = localize(data.copy);
+      stepTags.innerHTML = data.tags.map((tag) => `<span>${tag}</span>`).join('');
+    }
+
+    function setSimulationStep(index) {
+      setStep(index);
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang === 'en' ? 'en' : 'zh';
+      document.body.dataset.lang = currentLang;
+      document.documentElement.lang = currentLang === 'zh' ? 'zh-Hant' : 'en';
+      langButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.setLang === currentLang));
+      });
+      const activeIndex = Math.max(0, stepButtons.findIndex((button) => button.classList.contains('active')));
+      setStep(activeIndex, { force: true });
+    }
+
+    function updateSimulationScroll() {
+      if (!simulationStage || !modulesSection) return;
+
+      if (reduceMotion || window.innerWidth <= 640) {
+        simulationStage.dataset.simulationPhase = 'flow';
+        simulationStage.dataset.layerStep = '4';
+        simulationStage.dataset.flowStep = '5';
+        setSimulationStep(5);
+        return;
+      }
+
+      const progress = sectionProgress(modulesSection);
+      const state = Math.min(10, Math.floor(progress * 11));
+      if (state < 5) {
+        simulationStage.dataset.simulationPhase = 'layer';
+        simulationStage.dataset.layerStep = String(state);
+        simulationStage.dataset.flowStep = '0';
+        setSimulationStep(0);
+      } else {
+        const flowIndex = Math.min(5, state - 5);
+        simulationStage.dataset.simulationPhase = 'flow';
+        simulationStage.dataset.layerStep = '4';
+        simulationStage.dataset.flowStep = String(flowIndex);
+        setSimulationStep(flowIndex);
+      }
+    }
+
+    function updateScrollReveals() {
+      updateSimulationScroll();
+      updateCloudScroll();
+      updateVisualScroll();
+    }
+
+    function setCloudActive(index) {
+      const safeIndex = clamp(Number(index) || 0, 0, cloudData.length - 1);
+      if (cloudStage) cloudStage.dataset.activeCloud = String(safeIndex);
+      cloudTerms.forEach((term) => {
+        const isActive = Number(term.dataset.cloudIndex) === safeIndex;
+        term.classList.toggle('active', isActive);
+        term.setAttribute('aria-pressed', String(isActive));
+      });
+      if (cloudStage) {
+        const activeTerm = cloudTerms.find((term) => Number(term.dataset.cloudIndex) === safeIndex);
+        if (activeTerm && !activeTerm.hidden) {
+          const stageRect = cloudStage.getBoundingClientRect();
+          const termRect = activeTerm.getBoundingClientRect();
+          const x = clamp(termRect.left + termRect.width / 2 - stageRect.left - 195, 24, stageRect.width - 414);
+          const y = clamp(termRect.top + termRect.height / 2 - stageRect.top + 56, 132, stageRect.height - 220);
+          cloudStage.style.setProperty('--detail-left', `${x.toFixed(1)}px`);
+          cloudStage.style.setProperty('--detail-top', `${y.toFixed(1)}px`);
+        }
+      }
+      const data = cloudData[safeIndex];
+      if (cloudLabel) cloudLabel.textContent = data.label;
+      if (cloudTitle) cloudTitle.textContent = data.title;
+      if (cloudCopy) cloudCopy.textContent = data.copy;
+    }
+
+    function setCloudLayer(layer) {
+      const safeLayer = layer === 'teacher' ? 'teacher' : 'student';
+      currentCloudLayer = safeLayer;
+      if (cloudStage) cloudStage.dataset.cloudLayer = safeLayer;
+      cloudLayerButtons.forEach((button) => {
+        const isActive = button.dataset.cloudLayerToggle === safeLayer;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+      cloudTerms.forEach((term) => {
+        const isVisible = term.dataset.cloudLayer === safeLayer;
+        term.hidden = !isVisible;
+      });
+      const firstIndex = cloudData.findIndex((item) => item.layer === safeLayer);
+      setCloudActive(firstIndex >= 0 ? firstIndex : 0);
+      updateCloudScroll();
+    }
+
+    function updateCloudScroll() {
+      if (!cloudStage || !problemSection) return;
+      const activeLayer = currentCloudLayer || cloudStage.dataset.cloudLayer || 'student';
+      const layerTerms = cloudTerms.filter((term) => term.dataset.cloudLayer === activeLayer && !term.hidden);
+      if (!layerTerms.length) return;
+
+      if (reduceMotion || window.innerWidth <= 640) {
+        layerTerms.forEach((term) => term.classList.add('is-visible'));
+        cloudStage.classList.add('has-visible');
+        return;
+      }
+
+      const progress = sectionProgress(problemSection);
+      const revealProgress = revealSegment(progress, .5, .9);
+      const visibleCount = clamp(Math.floor(revealProgress * (layerTerms.length + 1)), 0, layerTerms.length);
+      cloudStage.style.setProperty('--cloud-reveal', revealProgress.toFixed(3));
+      layerTerms.forEach((term, layerIndex) => {
+        term.classList.toggle('is-visible', layerIndex < visibleCount);
+      });
+      cloudStage.classList.toggle('has-visible', visibleCount > 0);
+
+      const activeTerm = layerTerms.find((term) => term.classList.contains('active'));
+      if (visibleCount > 0 && (!activeTerm || !activeTerm.classList.contains('is-visible'))) {
+        const nextIndex = Number(layerTerms[Math.max(0, visibleCount - 1)].dataset.cloudIndex) || 0;
+        setCloudActive(nextIndex);
+      }
+    }
+
+    function updateCloudPointer(event) {
+      if (!cloudStage || window.innerWidth <= 640 || reduceMotion) return;
+      const rect = cloudStage.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - .5) * 34;
+      const y = ((event.clientY - rect.top) / rect.height - .5) * 26;
+      cloudStage.style.setProperty('--cloud-move-x', `${x.toFixed(2)}px`);
+      cloudStage.style.setProperty('--cloud-move-y', `${y.toFixed(2)}px`);
+      let nearestIndex = 0;
+      let nearestDistance = Infinity;
+      cloudTerms.forEach((term) => {
+        if (term.hidden) return;
+        const termRect = term.getBoundingClientRect();
+        const centerX = termRect.left + termRect.width / 2;
+        const centerY = termRect.top + termRect.height / 2;
+        const distance = Math.hypot(event.clientX - centerX, event.clientY - centerY);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = Number(term.dataset.cloudIndex) || 0;
+        }
+      });
+      setCloudActive(nearestIndex);
+    }
+
+    function resetCloudPointer() {
+      if (!cloudStage) return;
+      cloudStage.style.setProperty('--cloud-move-x', '0px');
+      cloudStage.style.setProperty('--cloud-move-y', '0px');
+      const activeLayer = cloudStage.dataset.cloudLayer === 'teacher' ? 'teacher' : 'student';
+      const firstIndex = cloudData.findIndex((item) => item.layer === activeLayer);
+      setCloudActive(firstIndex >= 0 ? firstIndex : 0);
+    }
+
+    function setEvidenceActive(index) {
+      const safeIndex = clamp(Number(index) || 0, 0, writingDraftData.length - 1);
+      if (evidenceStage) {
+        evidenceStage.dataset.activeEvidence = String(safeIndex);
+        evidenceStage.dataset.activeWriting = String(safeIndex);
+      }
+      sourceFragments.forEach((fragment) => {
+        fragment.classList.toggle('active', Number(fragment.dataset.evidenceIndex) === safeIndex);
+      });
+      logicSteps.forEach((step) => {
+        step.classList.toggle('active', Number(step.dataset.writingIndex) === safeIndex);
+      });
+      evidenceControls.forEach((control) => {
+        if (control.getAttribute('role') === 'button') {
+          const evidenceIndex = Number(control.dataset.evidenceIndex);
+          const writingIndex = Number(control.dataset.writingIndex);
+          const isActive = evidenceIndex === safeIndex || writingIndex === safeIndex;
+          control.setAttribute('aria-pressed', String(isActive));
+        }
+      });
+      const data = writingDraftData[safeIndex];
+      if (writingDraftLabel) writingDraftLabel.textContent = data.label;
+      if (writingDraftTitle) writingDraftTitle.textContent = data.title;
+      if (writingDraftCopy) writingDraftCopy.textContent = data.copy;
+      if (writingDraftRole) writingDraftRole.textContent = data.role;
+    }
+
+    function setVisualActive(index, options = {}) {
+      const safeIndex = clamp(Number(index) || 0, 0, visualWorldItems.length - 1);
+      if (!options.force && !options.focusThumb && currentVisualIndex === safeIndex) return;
+      currentVisualIndex = safeIndex;
+      const data = visualWorldItems[safeIndex];
+      const displayIndex = String(safeIndex + 1).padStart(2, '0');
+      let activeThumb = null;
+      if (visualBrowser) visualBrowser.dataset.activeVisual = String(safeIndex);
+      visualThumbs.forEach((thumb) => {
+        const isActive = Number(thumb.dataset.visualIndex) === safeIndex;
+        thumb.classList.toggle('active', isActive);
+        thumb.setAttribute('aria-pressed', String(isActive));
+        thumb.tabIndex = isActive ? 0 : -1;
+        if (isActive) activeThumb = thumb;
+      });
+      if (options.focusThumb && activeThumb) activeThumb.focus({ preventScroll: true });
+      if (visualMainImage) {
+        const shouldAnimate = visualMainImage.getAttribute('src') !== data.src && !reduceMotion;
+        visualMainImage.src = data.src;
+        visualMainImage.alt = data.alt;
+        if (shouldAnimate) {
+          visualMainImage.animate([
+            { opacity: .62, transform: 'scale(1.018)' },
+            { opacity: 1, transform: 'scale(1)' }
+          ], { duration: 320, easing: 'cubic-bezier(.16, 1, .3, 1)' });
+        }
+      }
+      if (visualCount) visualCount.textContent = `${displayIndex} / ${String(visualWorldItems.length).padStart(2, '0')}`;
+      if (visualIndex) visualIndex.textContent = displayIndex;
+      if (visualScene) visualScene.textContent = data.scene;
+      if (visualTheme) visualTheme.textContent = data.theme;
+      if (visualFunction) visualFunction.textContent = data.function;
+    }
+
+    function updateVisualScroll() {
+      if (!visualWorld || !visualSteps.length) return;
+      if (window.innerWidth <= 640) {
+        const activeIndex = Number(visualBrowser?.dataset.activeVisual) || 0;
+        setVisualActive(activeIndex);
+        return;
+      }
+      const sectionRect = visualWorld.getBoundingClientRect();
+      if (sectionRect.top > window.innerHeight || sectionRect.bottom < 0) return;
+      const triggerLine = window.innerHeight * .46;
+      let index = 0;
+      visualSteps.forEach((step, stepIndex) => {
+        if (step.getBoundingClientRect().top <= triggerLine) index = stepIndex;
+      });
+      setVisualActive(index);
+    }
+
+    function scrollToVisual(index) {
+      if (!visualWorld || !visualSteps.length) {
+        setVisualActive(index, { focusThumb: true });
+        return;
+      }
+      const safeIndex = clamp(Number(index) || 0, 0, visualWorldItems.length - 1);
+      const targetStep = visualSteps[safeIndex];
+      const targetTop = targetStep
+        ? targetStep.getBoundingClientRect().top + window.scrollY - window.innerHeight * .18
+        : visualWorld.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: targetTop,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+      setVisualActive(safeIndex, { focusThumb: true });
+    }
+
+    function updateEvidencePointer(event) {
+      if (!evidenceStage || !sourceFragments.length || window.innerWidth <= 640) return;
+      const pointerX = event.clientX;
+      const pointerY = event.clientY;
+      let nearestIndex = 0;
+      let nearestDistance = Infinity;
+
+      sourceFragments.forEach((fragment) => {
+        const rect = fragment.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(pointerX - centerX, pointerY - centerY);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = Number(fragment.dataset.evidenceIndex);
+        }
+      });
+
+      setEvidenceActive(nearestIndex);
+    }
+
+    stepButtons.forEach((button, index) => {
+      button.addEventListener('click', () => setSimulationStep(index));
+    });
+
+    cloudTerms.forEach((term) => {
+      const index = Number(term.dataset.cloudIndex);
+      if (!Number.isFinite(index)) return;
+      term.style.setProperty('--float-delay', `${(-0.55 * (index % 7)).toFixed(2)}s`);
+      term.style.setProperty('--float-speed', `${(6.4 + (index % 4) * .45).toFixed(2)}s`);
+      term.addEventListener('mouseenter', () => setCloudActive(index));
+      term.addEventListener('focus', () => setCloudActive(index));
+      term.addEventListener('click', () => setCloudActive(index));
+    });
+
+    if (cloudStage) {
+      cloudStage.addEventListener('pointermove', updateCloudPointer);
+      cloudStage.addEventListener('pointerleave', resetCloudPointer);
+    }
+
+    cloudLayerButtons.forEach((button) => {
+      button.addEventListener('click', () => setCloudLayer(button.dataset.cloudLayerToggle));
+    });
+
+    if (trialForm && trialEmail && trialStatus) {
+      trialForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = trialEmail.value.trim();
+        if (!trialEmail.checkValidity() || !email) {
+          trialStatus.textContent = '請輸入有效電郵地址。';
+          trialEmail.focus();
+          return;
+        }
+        trialStatus.textContent = '已記下電郵，稍後可接駁試玩申請系統。';
+        trialForm.reset();
+      });
+    }
+
+    evidenceControls.forEach((control) => {
+      const evidenceIndex = Number(control.dataset.evidenceIndex);
+      const writingIndex = Number(control.dataset.writingIndex);
+      const index = Number.isFinite(evidenceIndex) ? evidenceIndex : writingIndex;
+      if (!Number.isFinite(index)) return;
+      control.addEventListener('mouseenter', () => setEvidenceActive(index));
+      control.addEventListener('focus', () => setEvidenceActive(index));
+      control.addEventListener('click', () => setEvidenceActive(index));
+      control.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        setEvidenceActive(index);
+      });
+    });
+
+    visualThumbs.forEach((thumb) => {
+      const index = Number(thumb.dataset.visualIndex);
+      if (!Number.isFinite(index)) return;
+      thumb.addEventListener('click', () => scrollToVisual(index));
+    });
+
+    if (visualBrowser) {
+      visualBrowser.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const currentIndex = Number(visualBrowser.dataset.activeVisual) || 0;
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        scrollToVisual(currentIndex + direction);
+      });
+    }
+
+    if (evidenceStage) {
+      evidenceStage.addEventListener('pointermove', updateEvidencePointer);
+      evidenceStage.addEventListener('pointerleave', () => setEvidenceActive(Number(evidenceStage.dataset.activeEvidence) || 0));
+    }
+
+    langButtons.forEach((button) => {
+      button.addEventListener('click', () => applyLanguage(button.dataset.setLang));
+    });
+
+    const navLinks = Array.from(document.querySelectorAll('.nav-center a'));
+    const observedSections = Array.from(document.querySelectorAll('[data-section]'));
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const id = visible.target.id;
+      navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${id}`));
+    }, { threshold: [0.25, 0.45, 0.65] });
+    observedSections.forEach((section) => sectionObserver.observe(section));
+
+    const revealTargets = Array.from(document.querySelectorAll('.reveal-stage'));
+    const revealObserver = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.22 })
+      : null;
+    revealTargets.forEach((target) => {
+      if (revealObserver) {
+        revealObserver.observe(target);
+      } else {
+        target.classList.add('in-view');
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      updateIntro();
+      updateScrollReveals();
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      updateIntro();
+      updateScrollReveals();
+    });
+    updateIntro();
+    applyLanguage(currentLang);
+    updateScrollReveals();
+    setCloudLayer('student');
+    setEvidenceActive(2);
+    updateVisualScroll();
+  </script>
+</body>
+</html>
