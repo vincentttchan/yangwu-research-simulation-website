@@ -2232,81 +2232,6 @@
       max-width: none;
     }
 
-    .bridge-timeline {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 8px;
-      align-items: end;
-      padding-top: 0;
-    }
-
-    .bridge-timeline::before,
-    .bridge-timeline::after {
-      display: none;
-    }
-
-    .bridge-timeline::after {
-      right: calc((1 - var(--bridge-progress)) * 100%);
-      background: #a06a24;
-      box-shadow: 0 0 24px rgba(212,161,70,.26);
-      transition: right .18s ease;
-    }
-
-    .bridge-step {
-      position: relative;
-      z-index: 1;
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: rgba(47,45,36,.38);
-      text-align: left;
-      padding: 10px 12px;
-      border: 1px solid rgba(47,45,36,.1);
-      border-radius: 999px;
-      background: rgba(255,248,235,.26);
-      cursor: pointer;
-      display: grid;
-      gap: 4px;
-      min-width: 0;
-      font-family: inherit;
-    }
-
-    .bridge-step::before {
-      display: none;
-    }
-
-    .bridge-step span {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .08em;
-      font-weight: 900;
-    }
-
-    .bridge-step b {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 13px;
-      line-height: 1.25;
-      font-weight: 900;
-    }
-
-    .bridge-step.active,
-    .bridge-step:hover,
-    .bridge-step:focus-visible {
-      color: #2f2c22;
-      border-color: rgba(154,95,30,.36);
-      background: rgba(255,248,235,.72);
-      outline: none;
-    }
-
-    .bridge-step.active::before,
-    .bridge-step:hover::before,
-    .bridge-step:focus-visible::before {
-      display: none;
-    }
-
     .bridge-video-shell {
       position: relative;
       aspect-ratio: 16 / 9;
@@ -2692,21 +2617,6 @@
         top: 66px;
         min-height: calc(100vh - 66px);
       }
-      .bridge-timeline {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        row-gap: 12px;
-      }
-      .bridge-timeline::before,
-      .bridge-timeline::after {
-        display: none;
-      }
-      .bridge-step {
-        padding-top: 0;
-        padding-left: 20px;
-      }
-      .bridge-step::before {
-        top: 3px;
-      }
       #classroom .class-card {
         min-height: auto;
       }
@@ -2838,18 +2748,6 @@
       }
       .bridge-video-stage {
         gap: 14px;
-      }
-      .bridge-timeline {
-        display: flex;
-        overflow-x: auto;
-        padding-bottom: 4px;
-        scrollbar-width: none;
-      }
-      .bridge-timeline::-webkit-scrollbar {
-        display: none;
-      }
-      .bridge-step {
-        flex: 0 0 138px;
       }
       .bridge-video-shell {
         border-radius: 6px;
@@ -3289,33 +3187,6 @@
         </div>
 
         <div class="bridge-video-stage" data-active-bridge="0">
-          <div class="bridge-timeline" role="tablist" aria-label="威海衛論證影片時間軸">
-            <button class="bridge-step active" type="button" role="tab" aria-selected="true" data-bridge-step="0">
-              <span>01</span>
-              <b>進入威海衛</b>
-            </button>
-            <button class="bridge-step" type="button" role="tab" aria-selected="false" data-bridge-step="1">
-              <span>02</span>
-              <b>觀察海防現場</b>
-            </button>
-            <button class="bridge-step" type="button" role="tab" aria-selected="false" data-bridge-step="2">
-              <span>03</span>
-              <b>讀取相關史料</b>
-            </button>
-            <button class="bridge-step" type="button" role="tab" aria-selected="false" data-bridge-step="3">
-              <span>04</span>
-              <b>辨認改革限制</b>
-            </button>
-            <button class="bridge-step" type="button" role="tab" aria-selected="false" data-bridge-step="4">
-              <span>05</span>
-              <b>連接戰敗後果</b>
-            </button>
-            <button class="bridge-step" type="button" role="tab" aria-selected="false" data-bridge-step="5">
-              <span>06</span>
-              <b>形成歷史論證</b>
-            </button>
-          </div>
-
           <div class="bridge-video-shell">
             <video id="bridge-video" src="website_assets/flow_videos/bridge-weihaiwei-argument.mov" poster="website_assets/selected_v2/19-city-weihaiwei.webp" preload="metadata" muted playsinline autoplay loop></video>
             <div class="bridge-video-meta" id="bridge-time">00:00-00:04</div>
@@ -3763,7 +3634,6 @@
     const bridgeSection = document.querySelector('#bridge');
     const bridgeStage = document.querySelector('.bridge-video-stage');
     const bridgeVideo = document.querySelector('#bridge-video');
-    const bridgeSteps = Array.from(document.querySelectorAll('.bridge-step[data-bridge-step]'));
     const bridgeStepLabel = document.querySelector('#bridge-step-label');
     const bridgeStepTitle = document.querySelector('#bridge-step-title');
     const bridgeStepCopy = document.querySelector('#bridge-step-copy');
@@ -4009,11 +3879,6 @@
       }
       currentBridgeIndex = safeIndex;
       if (bridgeStage) bridgeStage.dataset.activeBridge = String(safeIndex);
-      bridgeSteps.forEach((step) => {
-        const isActive = Number(step.dataset.bridgeStep) === safeIndex;
-        step.classList.toggle('active', isActive);
-        step.setAttribute('aria-selected', String(isActive));
-      });
       if (bridgeStepLabel) bridgeStepLabel.textContent = data.label;
       if (bridgeStepTitle) bridgeStepTitle.textContent = data.title;
       if (bridgeStepCopy) bridgeStepCopy.textContent = data.copy;
@@ -4217,17 +4082,6 @@
         if (event.key !== 'Enter' && event.key !== ' ') return;
         event.preventDefault();
         setEvidenceActive(index);
-      });
-    });
-
-    bridgeSteps.forEach((step) => {
-      const index = Number(step.dataset.bridgeStep);
-      if (!Number.isFinite(index)) return;
-      step.addEventListener('click', () => setBridgeActive(index, { seekToStart: true }));
-      step.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        setBridgeActive(index, { seekToStart: true });
       });
     });
 
