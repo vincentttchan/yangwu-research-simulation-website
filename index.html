@@ -2732,12 +2732,21 @@
       color: rgba(255,248,235,.46);
     }
 
+    .trial-form .btn:disabled {
+      cursor: wait;
+      opacity: .7;
+    }
+
     .trial-status {
       min-height: 24px;
       margin-top: 12px;
       color: rgba(212,161,70,.9);
       font-size: 14px;
       font-weight: 800;
+    }
+
+    .trial-frame {
+      display: none;
     }
 
     @media (max-width: 1080px) {
@@ -3632,11 +3641,16 @@
         <div class="label"><span data-zh>進入模擬</span><span data-en>enter the simulation</span></div>
         <h2><span data-zh>親自走進改革現場，判斷失敗如何形成。</span><span data-en>Enter the reform sites and judge how failure was formed.</span></h2>
         <p><span class="single-line" data-zh>留下電郵，申請試玩《自強三十年》，讓城市、史料、人物抉擇與後果成為可討論的歷史經驗。</span><span data-en>Leave your email to request a trial of The Self-Strengthening Edition and turn cities, sources, actor choices, and consequences into discussable historical experience.</span></p>
-        <form class="trial-form" id="trial-form">
-          <input id="trial-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="輸入電郵地址" aria-label="電郵地址" required>
+        <form class="trial-form" id="trial-form" action="https://docs.google.com/forms/d/e/1FAIpQLSc_9S7ah6-lyu475oKsbLZVnDyoRIkn9Fb1vzVKSS3PH-Utkg/formResponse" method="POST" target="google-form-submit-frame">
+          <input id="trial-email" name="emailAddress" type="email" autocomplete="email" inputmode="email" placeholder="輸入電郵地址" aria-label="電郵地址" required>
+          <input id="trial-entry-email" name="entry.155875935" type="hidden">
+          <input name="fvv" type="hidden" value="1">
+          <input name="pageHistory" type="hidden" value="0">
+          <input name="fbzx" type="hidden" value="3151532612107983380">
           <button class="btn gold" type="submit"><span data-zh>申請試玩</span><span data-en>Request trial</span></button>
         </form>
         <div class="trial-status" id="trial-status" aria-live="polite"></div>
+        <iframe class="trial-frame" name="google-form-submit-frame" title="Google Form submission" hidden></iframe>
       </div>
     </section>
   </main>
@@ -3647,7 +3661,10 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const trialForm = document.querySelector('#trial-form');
     const trialEmail = document.querySelector('#trial-email');
+    const trialEntryEmail = document.querySelector('#trial-entry-email');
     const trialStatus = document.querySelector('#trial-status');
+    const trialSubmitButton = trialForm?.querySelector('button[type="submit"]');
+    let trialSubmitTimer = null;
 
     function clamp(value, min, max) {
       return Math.min(max, Math.max(min, value));
@@ -3969,7 +3986,8 @@
           cloudPanelCopy: '點擊詞語，查看遊戲要回應的學習困難與歷史因素。',
           trialInput: '輸入電郵地址',
           trialInvalid: '請輸入有效電郵地址。',
-          trialSuccess: '已記下電郵，稍後可接駁試玩申請系統。'
+          trialSubmitting: '正在提交申請...',
+          trialSuccess: '已收到申請，我們會稍後透過電郵聯絡你。'
         },
         en: {
           modulesLabel: 'Simulation System',
@@ -3989,7 +4007,8 @@
           cloudPanelCopy: 'Select a term to see the learning difficulty or historical factor the simulation responds to.',
           trialInput: 'Enter your email address',
           trialInvalid: 'Please enter a valid email address.',
-          trialSuccess: 'Email noted. A trial request flow can be connected next.'
+          trialSubmitting: 'Submitting request...',
+          trialSuccess: 'Request received. We will follow up by email.'
         }
       },
       simulationLayers: {
@@ -4710,16 +4729,24 @@
 
     if (trialForm && trialEmail && trialStatus) {
       trialForm.addEventListener('submit', (event) => {
-        event.preventDefault();
         const email = trialEmail.value.trim();
         const staticText = translatedData.static[currentLang] || translatedData.static.zh;
         if (!trialEmail.checkValidity() || !email) {
+          event.preventDefault();
           trialStatus.textContent = staticText.trialInvalid;
           trialEmail.focus();
           return;
         }
-        trialStatus.textContent = staticText.trialSuccess;
-        trialForm.reset();
+        if (trialEntryEmail) trialEntryEmail.value = email;
+        trialStatus.textContent = staticText.trialSubmitting;
+        if (trialSubmitButton) trialSubmitButton.disabled = true;
+        window.clearTimeout(trialSubmitTimer);
+        trialSubmitTimer = window.setTimeout(() => {
+          trialStatus.textContent = staticText.trialSuccess;
+          trialForm.reset();
+          if (trialEntryEmail) trialEntryEmail.value = '';
+          if (trialSubmitButton) trialSubmitButton.disabled = false;
+        }, 900);
       });
     }
 
