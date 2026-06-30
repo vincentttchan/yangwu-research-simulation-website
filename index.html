@@ -121,21 +121,42 @@
     }
 
     [data-lang="en"] .edition-title {
-      max-width: 12ch;
+      max-width: 9.8ch;
       margin-inline: auto;
-      font-size: clamp(54px, 7vw, 104px);
-      line-height: .92;
+      font-size: clamp(42px, 4.6vw, 66px);
+      line-height: .9;
     }
 
     [data-lang="en"] .opening-copy {
-      max-width: 720px;
+      max-width: 430px;
       margin-inline: auto;
+      font-size: clamp(14px, 1vw, 17px);
+      line-height: 1.55;
     }
 
     [data-lang="en"] .section-head h2 {
       max-width: 980px;
       font-size: clamp(42px, 5.4vw, 82px);
       line-height: .98;
+    }
+
+    [data-lang="en"] #classroom .section-head {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 18px;
+    }
+
+    [data-lang="en"] #classroom .section-head h2 {
+      max-width: 1220px;
+      font-size: clamp(46px, 4.7vw, 74px);
+      line-height: .96;
+    }
+
+    [data-lang="en"] #classroom .section-head p {
+      max-width: 760px;
+      margin-top: 0;
+      font-size: clamp(15px, 1.05vw, 18px);
+      line-height: 1.56;
     }
 
     [data-lang="en"] .section-head p,
@@ -2607,56 +2628,6 @@
       transform: translate3d(var(--float-x, 0), calc(var(--float-y, 0) - 10px), 0) scale(1.025);
     }
 
-    #classroom .classroom-detail {
-      position: absolute;
-      right: 4%;
-      top: 30%;
-      z-index: 4;
-      width: min(360px, 29vw);
-      padding: 18px 20px;
-      border: 1px solid rgba(255,248,235,.12);
-      border-radius: 8px;
-      color: var(--ivory);
-      background: rgba(10,8,5,.88);
-      box-shadow: 0 28px 90px rgba(5,4,3,.24);
-      backdrop-filter: blur(16px);
-      opacity: 0;
-      visibility: hidden;
-      transform: translate3d(calc(var(--classroom-move-x, 0px) * .18), calc(var(--classroom-move-y, 0px) * .18), 0);
-      transition: opacity .24s ease, visibility .24s ease, transform .24s ease;
-      pointer-events: none;
-    }
-
-    #classroom .classroom-grid.has-active .classroom-detail {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    #classroom .classroom-detail small {
-      color: rgba(212,161,70,.9);
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 12px;
-      font-weight: 950;
-      letter-spacing: .12em;
-    }
-
-    #classroom .classroom-detail b {
-      display: block;
-      margin-top: 12px;
-      color: var(--ivory);
-      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
-      font-size: clamp(28px, 2.5vw, 38px);
-      line-height: 1.05;
-    }
-
-    #classroom .classroom-detail p {
-      margin-top: 12px;
-      color: rgba(255,248,235,.72);
-      font-size: 14px;
-      line-height: 1.58;
-      font-weight: 660;
-    }
-
     @keyframes classroomCardFloat {
       0%, 100% {
         transform: translate3d(var(--float-x, 0), var(--float-y, 0), 0);
@@ -3071,9 +3042,6 @@
         max-height: none;
         overflow: visible;
         transform: none;
-      }
-      #classroom .classroom-detail {
-        display: none;
       }
       .module-grid { grid-template-columns: 1fr; }
       .module { min-height: 290px; }
@@ -3641,11 +3609,6 @@
               <span>回饋設計</span>
             </div>
           </article>
-          <aside class="classroom-detail" aria-live="polite">
-            <small id="classroom-detail-label">課堂流程</small>
-            <b id="classroom-detail-title">從問題進入，再回到書寫</b>
-            <p id="classroom-detail-copy">導入問題、遊戲探索、小組討論與歷史書寫被放在同一條課堂路線中。</p>
-          </aside>
         </div>
       </div>
     </section>
@@ -4132,9 +4095,6 @@
     const classroomSection = document.querySelector('#classroom');
     const classroomGrid = classroomSection?.querySelector('.classroom-grid');
     const classroomCards = Array.from(classroomSection?.querySelectorAll('.class-card') || []);
-    const classroomDetailLabel = document.querySelector('#classroom-detail-label');
-    const classroomDetailTitle = document.querySelector('#classroom-detail-title');
-    const classroomDetailCopy = document.querySelector('#classroom-detail-copy');
     const visualWorld = document.querySelector('#visual-world');
     const visualBrowser = visualWorld?.querySelector('.visual-browser');
     const visualThumbs = Array.from(visualBrowser?.querySelectorAll('.visual-thumb[data-visual-index]') || []);
@@ -4282,8 +4242,6 @@
           tags.setAttribute('aria-label', `${data.label} key points`);
         }
       });
-      const activeIndex = Number(classroomGrid?.dataset.activeClassroom) || 0;
-      if (classroomGrid?.classList.contains('has-active')) setClassroomActive(activeIndex);
     }
 
     function applyLanguage(lang) {
@@ -4443,34 +4401,19 @@
       setCloudActive(firstIndex >= 0 ? firstIndex : 0);
     }
 
-    function classroomCardData(index) {
-      const card = classroomCards[index];
-      return {
-        label: card?.querySelector('small')?.textContent?.trim() || '',
-        title: card?.querySelector('h3')?.textContent?.trim() || '',
-        copy: card?.querySelector('p')?.textContent?.trim() || ''
-      };
-    }
-
     function setClassroomActive(index) {
       if (!classroomGrid || !classroomCards.length) return;
       const safeIndex = clamp(Number(index) || 0, 0, classroomCards.length - 1);
       classroomGrid.dataset.activeClassroom = String(safeIndex);
-      classroomGrid.classList.add('has-active');
       classroomCards.forEach((card, cardIndex) => {
         const isActive = cardIndex === safeIndex;
         card.classList.toggle('active', isActive);
         card.setAttribute('aria-pressed', String(isActive));
       });
-      const data = classroomCardData(safeIndex);
-      if (classroomDetailLabel) classroomDetailLabel.textContent = data.label;
-      if (classroomDetailTitle) classroomDetailTitle.textContent = data.title;
-      if (classroomDetailCopy) classroomDetailCopy.textContent = data.copy;
     }
 
     function clearClassroomActive() {
       if (!classroomGrid) return;
-      classroomGrid.classList.remove('has-active');
       classroomCards.forEach((card) => {
         card.classList.remove('active');
         card.setAttribute('aria-pressed', 'false');
