@@ -2178,9 +2178,8 @@
 
     #bridge {
       position: relative;
-      padding-top: clamp(148px, 17vh, 196px);
-      padding-bottom: clamp(84px, 12vh, 150px);
-      min-height: 420vh;
+      padding-top: clamp(118px, 13vh, 156px);
+      padding-bottom: clamp(92px, 12vh, 140px);
       overflow: visible;
       background: #e9e3cf;
       color: #2f2c22;
@@ -2191,35 +2190,37 @@
     }
 
     #bridge .inner {
-      position: sticky;
-      top: 76px;
+      position: relative;
       z-index: 1;
-      min-height: calc(100vh - 76px);
+      width: min(1520px, calc(100% - 56px));
+      min-height: auto;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     #bridge .section-head {
       grid-template-columns: minmax(0, 1fr);
-      max-width: 980px;
+      max-width: none;
       margin: 0 0 clamp(22px, 3.2vh, 38px);
       gap: 18px;
     }
 
     #bridge .section-head h2 {
-      max-width: 860px;
+      max-width: none;
       color: #2f2c22;
-      font-size: clamp(34px, 4vw, 62px);
-      line-height: 1.08;
+      font-size: clamp(34px, 3.2vw, 52px);
+      line-height: 1.04;
+      white-space: nowrap;
     }
 
     #bridge .section-head p {
-      max-width: 640px;
+      max-width: none;
       color: rgba(47,45,36,.62);
-      font-size: clamp(15px, 1.22vw, 18px);
-      line-height: 1.75;
+      font-size: clamp(14px, 1vw, 16px);
+      line-height: 1.65;
       font-weight: 680;
+      white-space: nowrap;
     }
 
     .bridge-video-stage {
@@ -2227,7 +2228,8 @@
       position: relative;
       display: grid;
       gap: clamp(14px, 2vh, 22px);
-      max-width: 1180px;
+      width: 100%;
+      max-width: none;
     }
 
     .bridge-timeline {
@@ -2236,18 +2238,12 @@
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 8px;
       align-items: end;
-      padding-top: 18px;
+      padding-top: 0;
     }
 
     .bridge-timeline::before,
     .bridge-timeline::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 24px;
-      height: 1px;
-      background: rgba(47,45,36,.16);
+      display: none;
     }
 
     .bridge-timeline::after {
@@ -2265,7 +2261,10 @@
       background: transparent;
       color: rgba(47,45,36,.38);
       text-align: left;
-      padding: 18px 0 0;
+      padding: 10px 12px;
+      border: 1px solid rgba(47,45,36,.1);
+      border-radius: 999px;
+      background: rgba(255,248,235,.26);
       cursor: pointer;
       display: grid;
       gap: 4px;
@@ -2274,17 +2273,7 @@
     }
 
     .bridge-step::before {
-      content: "";
-      position: absolute;
-      top: 1px;
-      left: 0;
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: #e9e3cf;
-      border: 1px solid rgba(47,45,36,.2);
-      box-shadow: 0 0 0 5px rgba(233,227,207,.86);
-      transition: transform .22s ease, background .22s ease, border-color .22s ease;
+      display: none;
     }
 
     .bridge-step span {
@@ -2307,21 +2296,21 @@
     .bridge-step:hover,
     .bridge-step:focus-visible {
       color: #2f2c22;
+      border-color: rgba(154,95,30,.36);
+      background: rgba(255,248,235,.72);
       outline: none;
     }
 
     .bridge-step.active::before,
     .bridge-step:hover::before,
     .bridge-step:focus-visible::before {
-      transform: scale(1.35);
-      background: #d4a146;
-      border-color: #9a5f1e;
+      display: none;
     }
 
     .bridge-video-shell {
       position: relative;
       aspect-ratio: 16 / 9;
-      width: min(100%, 1000px);
+      width: 100%;
       overflow: hidden;
       border-radius: 8px;
       background: #11100d;
@@ -2836,6 +2825,10 @@
       #bridge .section-head h2 {
         font-size: clamp(34px, 10vw, 50px);
         line-height: 1.04;
+        white-space: normal;
+      }
+      #bridge .section-head p {
+        white-space: normal;
       }
       #bridge::before {
         font-size: 84px;
@@ -3290,9 +3283,9 @@
         <div class="section-head">
           <div>
             <div class="label">由經歷走向論證</div>
-            <h2>從威海衛紅點，走到一段歷史論證</h2>
+            <h2>從歷史場景中的紅點走一段歷史論證</h2>
           </div>
-          <p>同一件歷史事件貫穿六步：從地圖紅點進入威海衛，觀察海防現場、讀取史料、辨認限制、連接後果，最後回到洋務運動成敗的論證。</p>
+          <p>建構論點、論據與論證貫穿六步：從地圖紅點進入威海衛，觀察海防現場、讀取史料、辨認限制、連接後果，最後回到洋務運動成敗的論證。</p>
         </div>
 
         <div class="bridge-video-stage" data-active-bridge="0">
@@ -3324,7 +3317,7 @@
           </div>
 
           <div class="bridge-video-shell">
-            <video id="bridge-video" src="website_assets/flow_videos/bridge-weihaiwei-argument.mov" poster="website_assets/selected_v2/19-city-weihaiwei.webp" preload="metadata" muted playsinline></video>
+            <video id="bridge-video" src="website_assets/flow_videos/bridge-weihaiwei-argument.mov" poster="website_assets/selected_v2/19-city-weihaiwei.webp" preload="metadata" muted playsinline autoplay loop></video>
             <div class="bridge-video-meta" id="bridge-time">00:00-00:04</div>
           </div>
 
@@ -3875,7 +3868,7 @@
     function updateScrollReveals() {
       updateSimulationScroll();
       updateCloudScroll();
-      updateBridgeScroll();
+      updateBridgePlayback();
       updateVisualScroll();
     }
 
@@ -4003,7 +3996,8 @@
         const drift = Math.abs((bridgeVideo.currentTime || 0) - pendingBridgeTime);
         if (drift > .08) bridgeVideo.currentTime = pendingBridgeTime;
       }
-      bridgeVideo.pause();
+      updateBridgeTimeState();
+      if (!reduceMotion) playBridgeVideo();
     }
 
     function setBridgeActive(index, options = {}) {
@@ -4027,18 +4021,35 @@
       if (options.seekToStart) seekBridgeVideo(data.start + .05);
     }
 
-    function updateBridgeScroll() {
+    function updateBridgeTimeState() {
+      if (!bridgeStage || !bridgeVideo || !bridgeStepData.length) return;
+      const finalEnd = bridgeStepData[bridgeStepData.length - 1].end;
+      const time = clamp(bridgeVideo.currentTime || pendingBridgeTime || 0, 0, finalEnd);
+      bridgeStage.style.setProperty('--bridge-progress', (time / finalEnd).toFixed(3));
+      setBridgeActive(bridgeIndexForTime(time));
+    }
+
+    function playBridgeVideo() {
+      if (!bridgeVideo || reduceMotion) return;
+      const playAttempt = bridgeVideo.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
+    }
+
+    function updateBridgePlayback() {
       if (!bridgeSection || !bridgeStage || !bridgeStepData.length) return;
       if (reduceMotion) {
         setBridgeActive(currentBridgeIndex >= 0 ? currentBridgeIndex : 0);
         return;
       }
-      const finalEnd = bridgeStepData[bridgeStepData.length - 1].end;
-      const progress = sectionProgress(bridgeSection);
-      const currentTime = clamp(progress * finalEnd, 0, finalEnd);
-      bridgeStage.style.setProperty('--bridge-progress', progress.toFixed(3));
-      setBridgeActive(bridgeIndexForTime(currentTime));
-      seekBridgeVideo(currentTime);
+      const rect = bridgeSection.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight * .72 && rect.bottom > window.innerHeight * .28;
+      bridgeStage.classList.toggle('is-playing', visible);
+      if (visible) {
+        playBridgeVideo();
+      } else if (bridgeVideo) {
+        bridgeVideo.pause();
+      }
+      updateBridgeTimeState();
     }
 
     function setEvidenceActive(index) {
@@ -4221,8 +4232,15 @@
     });
 
     if (bridgeVideo) {
-      bridgeVideo.addEventListener('loadedmetadata', () => seekBridgeVideo(pendingBridgeTime));
-      bridgeVideo.addEventListener('play', () => bridgeVideo.pause());
+      bridgeVideo.addEventListener('loadedmetadata', () => {
+        seekBridgeVideo(pendingBridgeTime);
+        updateBridgePlayback();
+      });
+      bridgeVideo.addEventListener('timeupdate', updateBridgeTimeState);
+      bridgeVideo.addEventListener('ended', () => {
+        seekBridgeVideo(0);
+        playBridgeVideo();
+      });
     }
 
     visualThumbs.forEach((thumb) => {
