@@ -127,11 +127,13 @@
       line-height: .9;
     }
 
-    [data-lang="en"] .opening-copy {
+    [data-lang="en"] .opening-copy,
+    [data-lang="en"] .edition-copy {
       max-width: 430px;
       margin-inline: auto;
       font-size: clamp(14px, 1vw, 17px);
       line-height: 1.55;
+      text-align: left;
     }
 
     [data-lang="en"] .section-head h2 {
@@ -147,9 +149,9 @@
     }
 
     [data-lang="en"] #classroom .section-head h2 {
-      max-width: 1220px;
-      font-size: clamp(46px, 4.7vw, 74px);
-      line-height: .96;
+      max-width: 1160px;
+      font-size: clamp(42px, 4.05vw, 66px);
+      line-height: .94;
     }
 
     [data-lang="en"] #classroom .section-head p {
@@ -157,6 +159,11 @@
       margin-top: 0;
       font-size: clamp(15px, 1.05vw, 18px);
       line-height: 1.56;
+    }
+
+    [data-lang="en"] .edition-copy::before {
+      margin-left: 0;
+      margin-right: auto;
     }
 
     [data-lang="en"] .section-head p,
@@ -484,7 +491,7 @@
     }
 
     .node::after {
-      content: attr(data-label);
+      content: attr(data-label-zh);
       position: absolute;
       left: 16px;
       top: -8px;
@@ -494,6 +501,13 @@
       font-weight: 850;
       letter-spacing: .06em;
       text-transform: uppercase;
+    }
+
+    [data-lang="en"] .node::after {
+      content: attr(data-label-en);
+      min-width: 170px;
+      letter-spacing: .02em;
+      text-transform: none;
     }
 
     .node.n1 { left: 12.6%; top: 70.5%; }
@@ -3286,10 +3300,10 @@
             <rect x="550" y="310" width="340" height="360"></rect>
           </svg>
         </div>
-        <span class="node n1" data-label="外灘碼頭"></span>
-        <span class="node n2" data-label="洋行門前"></span>
-        <span class="node n3" data-label="輪船招商局"></span>
-        <span class="node n4" data-label="江南製造局"></span>
+        <span class="node n1" data-label-zh="外灘碼頭" data-label-en="Bund Wharf"></span>
+        <span class="node n2" data-label-zh="洋行門前" data-label-en="Foreign Firm"></span>
+        <span class="node n3" data-label-zh="輪船招商局" data-label-en="China Merchants"></span>
+        <span class="node n4" data-label-zh="江南製造局" data-label-en="Jiangnan Arsenal"></span>
 
         <div class="edition-frame">
           <div>
@@ -3968,7 +3982,7 @@
           visualTitle: 'Cities, sources, and endings form one historical route',
           visualCopy: 'Immersion is not decoration. The visual world helps students place technology, institutions, actors, and wartime consequences in the same historical space.',
           classroomLabel: 'Classroom and Research Layer',
-          classroomTitleLines: ['Turn the simulation into a teachable, observable', 'and improvable learning design'],
+          classroomTitleLines: ['Turn the simulation into', 'a teachable, observable,', 'and improvable learning design'],
           classroomCopy: 'This layer shows how teachers, AI support, research evidence, and learning data can support classroom use. Each card is an entry point for use, observation, or revision.',
           cloudPanelLabel: 'Research Focus',
           cloudPanelTitle: 'Move from learning difficulties to design needs',
