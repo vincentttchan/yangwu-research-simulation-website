@@ -2333,23 +2333,23 @@
 
     #classroom {
       position: relative;
-      padding-top: clamp(132px, 15vh, 176px);
-      background:
-        radial-gradient(circle at 80% 20%, rgba(47,141,122,.12), transparent 26%),
-        linear-gradient(180deg, #e9e3cf 0%, #f3eddd 100%);
+      min-height: 112svh;
+      padding-top: clamp(116px, 14vh, 164px);
+      padding-bottom: clamp(90px, 12vh, 148px);
+      background: #e9e3cf;
+      color: rgba(36,49,42,.94);
       overflow: hidden;
     }
 
     #classroom::before {
-      content: "課堂 / 過程 / 評估";
+      content: "";
       position: absolute;
-      left: 50%;
-      top: 56%;
-      transform: translate(-50%, -50%);
-      color: rgba(47,62,52,.06);
-      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
-      font-size: clamp(70px, 13vw, 210px);
-      white-space: nowrap;
+      inset: 0;
+      background:
+        radial-gradient(circle at 68% 28%, rgba(47,141,122,.14), transparent 24%),
+        radial-gradient(circle at 24% 72%, rgba(212,161,70,.13), transparent 28%),
+        linear-gradient(120deg, transparent 0 21%, rgba(36,49,42,.035) 21.1% 21.2%, transparent 21.3% 100%),
+        linear-gradient(36deg, transparent 0 58%, rgba(36,49,42,.035) 58.1% 58.2%, transparent 58.3% 100%);
       pointer-events: none;
     }
 
@@ -2361,7 +2361,7 @@
     #classroom .section-head {
       grid-template-columns: minmax(0, .98fr) minmax(280px, .42fr);
       align-items: end;
-      margin-bottom: clamp(48px, 9vh, 96px);
+      margin-bottom: clamp(34px, 6vh, 66px);
     }
 
     #classroom .section-head h2 {
@@ -2378,56 +2378,165 @@
     }
 
     #classroom .classroom-grid {
-      gap: clamp(20px, 4vw, 58px);
-      align-items: stretch;
+      position: relative;
+      display: block;
+      min-height: clamp(680px, 72vh, 800px);
+      margin-top: clamp(18px, 4vh, 42px);
     }
 
     #classroom .classroom-grid::before {
-      left: 6%;
-      right: 6%;
-      top: 72px;
-      background: linear-gradient(90deg, rgba(36,49,42,.08), rgba(36,49,42,.32), rgba(36,49,42,.08));
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(760px, 70vw);
+      aspect-ratio: 1.7;
+      transform: translate(-50%, -50%) rotate(-7deg);
+      border: 1px solid rgba(36,49,42,.08);
+      border-radius: 50%;
+      background:
+        linear-gradient(90deg, transparent calc(50% - 1px), rgba(36,49,42,.045) 50%, transparent calc(50% + 1px)),
+        linear-gradient(0deg, transparent calc(50% - 1px), rgba(36,49,42,.035) 50%, transparent calc(50% + 1px));
+      pointer-events: none;
     }
 
     #classroom .class-card {
-      min-height: 380px;
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
+      position: absolute;
+      width: min(340px, 28vw);
+      min-height: auto;
+      padding: 18px 20px 20px;
+      border: 1px solid rgba(36,49,42,.1);
+      border-radius: 8px;
+      background: rgba(255,248,235,.86);
+      box-shadow: 0 22px 70px rgba(36,49,42,.09);
+      backdrop-filter: blur(14px);
+      transform: translate3d(var(--float-x, 0), var(--float-y, 0), 0);
+      animation: classroomCardFloat var(--float-duration, 8s) ease-in-out infinite;
+      animation-delay: var(--float-delay, 0s);
+      transition: border-color .28s ease, box-shadow .28s ease, background .28s ease, transform .28s ease;
+      outline: none;
+    }
+
+    #classroom .class-card:nth-child(1) {
+      left: 3%;
+      top: 7%;
+      --float-y: -3px;
+      --float-rise: 15px;
+      --float-duration: 8.8s;
+    }
+
+    #classroom .class-card:nth-child(2) {
+      left: 38%;
+      top: 0;
+      --float-y: 4px;
+      --float-rise: 18px;
+      --float-duration: 9.6s;
+      --float-delay: -2s;
+    }
+
+    #classroom .class-card:nth-child(3) {
+      right: 3%;
+      top: 9%;
+      --float-x: 3px;
+      --float-rise: 13px;
+      --float-duration: 8.4s;
+      --float-delay: -1s;
+    }
+
+    #classroom .class-card:nth-child(4) {
+      left: 11%;
+      bottom: 5%;
+      --float-x: -4px;
+      --float-rise: 16px;
+      --float-duration: 9.2s;
+      --float-delay: -3s;
+    }
+
+    #classroom .class-card:nth-child(5) {
+      left: 43%;
+      bottom: 0;
+      --float-y: 6px;
+      --float-rise: 20px;
+      --float-duration: 10.2s;
+      --float-delay: -4s;
+    }
+
+    #classroom .class-card:nth-child(6) {
+      right: 2%;
+      bottom: 8%;
+      --float-x: 5px;
+      --float-rise: 15px;
+      --float-duration: 8.9s;
+      --float-delay: -1.8s;
     }
 
     #classroom .class-card::before {
       content: "";
-      display: block;
-      width: 13px;
-      height: 13px;
-      margin-bottom: 44px;
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 9px;
+      margin-bottom: 1px;
       border-radius: 999px;
-      background: var(--jade);
-      box-shadow: 0 0 0 12px rgba(47,141,122,.08);
+      background: var(--gold);
+      box-shadow: 0 0 0 7px rgba(212,161,70,.12);
     }
 
     #classroom .class-card small {
-      color: rgba(36,49,42,.5);
-      letter-spacing: .18em;
+      color: rgba(36,49,42,.54);
+      letter-spacing: .12em;
     }
 
     #classroom .class-card h3 {
-      max-width: 420px;
-      margin-top: 22px;
+      max-width: 340px;
+      margin-top: 13px;
       color: rgba(36,49,42,.94);
-      font-size: clamp(34px, 3.8vw, 68px);
-      line-height: .95;
+      font-size: clamp(25px, 2.2vw, 38px);
+      line-height: 1.03;
     }
 
     #classroom .class-card p {
-      max-width: 360px;
-      margin-top: 24px;
-      color: rgba(36,49,42,.64);
-      font-size: 16px;
-      line-height: 1.68;
+      max-width: 34ch;
+      margin-top: 12px;
+      color: rgba(36,49,42,.66);
+      font-size: 14px;
+      line-height: 1.58;
       font-weight: 680;
+    }
+
+    #classroom .class-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 15px;
+    }
+
+    #classroom .class-card-tags span {
+      padding: 5px 8px;
+      border: 1px solid rgba(36,49,42,.1);
+      border-radius: 999px;
+      color: rgba(36,49,42,.56);
+      background: rgba(233,227,207,.56);
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    #classroom .class-card:is(:hover, :focus) {
+      z-index: 3;
+      animation-play-state: paused;
+      border-color: rgba(47,141,122,.28);
+      background: rgba(255,248,235,.96);
+      box-shadow: 0 32px 90px rgba(36,49,42,.16);
+      transform: translate3d(var(--float-x, 0), calc(var(--float-y, 0) - 10px), 0) scale(1.025);
+    }
+
+    @keyframes classroomCardFloat {
+      0%, 100% {
+        transform: translate3d(var(--float-x, 0), var(--float-y, 0), 0);
+      }
+      50% {
+        transform: translate3d(var(--float-x, 0), calc(var(--float-y, 0) - var(--float-rise, 14px)), 0);
+      }
     }
 
     .final {
@@ -2607,6 +2716,37 @@
       #classroom .section-head {
         grid-template-columns: 1fr;
       }
+      #classroom .classroom-grid {
+        min-height: 860px;
+      }
+      #classroom .class-card {
+        width: min(360px, 42vw);
+      }
+      #classroom .class-card:nth-child(1) {
+        left: 0;
+        top: 8%;
+      }
+      #classroom .class-card:nth-child(2) {
+        left: auto;
+        right: 5%;
+        top: 2%;
+      }
+      #classroom .class-card:nth-child(3) {
+        right: 0;
+        top: 34%;
+      }
+      #classroom .class-card:nth-child(4) {
+        left: 4%;
+        bottom: 30%;
+      }
+      #classroom .class-card:nth-child(5) {
+        left: 28%;
+        bottom: 0;
+      }
+      #classroom .class-card:nth-child(6) {
+        right: 3%;
+        bottom: 16%;
+      }
       #problem .section-head {
         margin-bottom: -6vh;
       }
@@ -2763,8 +2903,25 @@
       #classroom::before {
         display: none;
       }
-      #classroom .class-card::before {
-        margin-bottom: 24px;
+      #classroom .classroom-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        min-height: auto;
+      }
+      #classroom .classroom-grid::before {
+        display: none;
+      }
+      #classroom .class-card,
+      #classroom .class-card:nth-child(n) {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        animation: none;
+        transform: none;
+      }
+      #classroom .class-card:is(:hover, :focus) {
+        transform: translateY(-4px);
       }
       .module-grid { grid-template-columns: 1fr; }
       .module { min-height: 290px; }
@@ -3261,26 +3418,71 @@
         <div class="section-head">
           <div>
             <div class="label">課堂與研究層</div>
-            <h2>讓學習過程可以被設計、觀察與回到評估</h2>
+            <h2>把遊戲變成可教、可觀察、可改進的學習設計</h2>
           </div>
-          <p>模擬遊戲把學生的探索、史料接觸、人物抉擇與反思節點留下來，讓教師能設計討論，研究者能觀察過程，再配合工作紙、後測、遷移任務和評分規準判斷學習成效。</p>
+          <p>這一層不是再展示遊戲畫面，而是展示教師、AI、研究證據與學習數據如何支撐課堂。每張卡都是一個可被使用、觀察或改進的入口。</p>
         </div>
 
-        <div class="classroom-grid">
-          <article class="class-card">
-            <small>01 / 課堂任務</small>
-            <h3>把遊戲接回共同問題</h3>
-            <p>教師以同一歷史問題、工作紙和討論任務，把遊戲經歷接回課堂。</p>
+        <div class="classroom-grid" aria-label="課堂與研究支援面向">
+          <article class="class-card" tabindex="0">
+            <small>課堂流程</small>
+            <h3>從問題進入，再回到書寫</h3>
+            <p>導入問題、遊戲探索、小組討論與歷史書寫被放在同一條課堂路線中。</p>
+            <div class="class-card-tags" aria-label="課堂流程重點">
+              <span>導入問題</span>
+              <span>小組討論</span>
+              <span>歷史書寫</span>
+            </div>
           </article>
-          <article class="class-card">
-            <small>02 / 遊戲過程</small>
-            <h3>留下探索與抉擇線索</h3>
-            <p>系統呈現學生如何探索城市、接觸史料、作出抉擇和回應 checkpoint。</p>
+          <article class="class-card" tabindex="0">
+            <small>教師鷹架</small>
+            <h3>把困難變成可追問的任務</h3>
+            <p>提示語、追問句、工作紙與分層任務，協助學生由經歷整理出判斷。</p>
+            <div class="class-card-tags" aria-label="教師鷹架重點">
+              <span>提示語</span>
+              <span>追問句</span>
+              <span>分層任務</span>
+            </div>
           </article>
-          <article class="class-card">
-            <small>03 / 評估證據</small>
-            <h3>用書寫與評分判斷成效</h3>
-            <p>學習成效不直接由點擊紀錄判斷，而要配合後測、遷移任務、書寫表現和評分規準。</p>
+          <article class="class-card" tabindex="0">
+            <small>AI 支援</small>
+            <h3>讓教師更快看見論證缺口</h3>
+            <p>AI 可整理學生回應、生成追問，並標示論點、證據與解釋之間的斷裂。</p>
+            <div class="class-card-tags" aria-label="AI 支援重點">
+              <span>整理回應</span>
+              <span>生成追問</span>
+              <span>標示缺口</span>
+            </div>
+          </article>
+          <article class="class-card" tabindex="0">
+            <small>研究證據</small>
+            <h3>不只看完成度，也看理解如何變化</h3>
+            <p>前後測、訪談、作品分析與課堂觀察，讓學習成效有可追蹤的證據。</p>
+            <div class="class-card-tags" aria-label="研究證據重點">
+              <span>前後測</span>
+              <span>訪談</span>
+              <span>作品分析</span>
+            </div>
+          </article>
+          <article class="class-card" tabindex="0">
+            <small>學習數據</small>
+            <h3>把遊戲路徑轉成教學回饋</h3>
+            <p>選擇路徑、史料使用與論證變化，幫助教師辨認學生在哪一步失去支撐。</p>
+            <div class="class-card-tags" aria-label="學習數據重點">
+              <span>選擇路徑</span>
+              <span>史料使用</span>
+              <span>論證變化</span>
+            </div>
+          </article>
+          <article class="class-card" tabindex="0">
+            <small>設計迭代</small>
+            <h3>用學生困難反過來修改任務</h3>
+            <p>當證據薄弱、扣題不足或未能代入反覆出現，任務與提示就能被重新設計。</p>
+            <div class="class-card-tags" aria-label="設計迭代重點">
+              <span>修改任務</span>
+              <span>調整提示</span>
+              <span>回饋設計</span>
+            </div>
           </article>
         </div>
       </div>
